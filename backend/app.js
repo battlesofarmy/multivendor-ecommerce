@@ -11,7 +11,7 @@ const cors = require("cors");
 // }));
 // app.use(cors());
 app.use(cors({
-  origin: 'http://localhost:3000', // Frontend URL
+  origin:[ 'http://localhost:3000', 'https://multivendor-frontend-lyart.vercel.app'], // Frontend URL
   credentials: true               // Allow cookies, auth headers, etc.
 }));
 
