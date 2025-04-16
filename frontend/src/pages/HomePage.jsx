@@ -7,16 +7,38 @@ import FeaturedProduct from "../components/Route/FeaturedProduct/FeaturedProduct
 import Events from "../components/Events/Events";
 import Sponsored from "../components/Route/Sponsored";
 import Footer from "../components/Layout/Footer";
+import { useDispatch, useSelector } from 'react-redux';
+import {declude, include} from '../redux/myCounterSlice'
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const myCounter = useSelector((state)=> state.myCounter.value);
   return (
     <div>
+
+<div className="p-5">
+        <h2 className="text-2xl font-bold">Counter: {myCounter}</h2>
+        <button
+          onClick={() => dispatch(include())}
+          className="px-4 py-2 bg-green-600 rounded-md mx-2"
+        >
+          +
+        </button>
+        <button
+          onClick={() => dispatch(declude())}
+          className="px-4 py-2 bg-red-600 rounded-md"
+        >
+          -
+        </button>
+      </div>
+
         <Header activeHeading={1} />
         <Hero />
         <Categories />
         <BestDeals />
-        <Events />
-        <FeaturedProduct />
+        {/* <Events /> */}
+        <h2>johfa</h2>
+        {/* <FeaturedProduct /> */}
         <Sponsored />
         <Footer />
     </div>

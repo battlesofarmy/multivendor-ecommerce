@@ -12,7 +12,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import DropDown from "./DropDown";
 import Navbar from "./Navbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
 import { RxCross1 } from "react-icons/rx";
@@ -31,7 +31,12 @@ const Header = ({ activeHeading }) => {
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
+  // const dispatch = useDispatch();
+  // const result = dispatch(signInUser({ email, password }));
+  
+
   const handleSearchChange = (e) => {
+    
     const term = e.target.value;
     setSearchTerm(term);
 

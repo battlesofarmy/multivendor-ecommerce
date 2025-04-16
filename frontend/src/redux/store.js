@@ -8,6 +8,13 @@ import { wishlistReducer } from "./reducers/wishlist";
 import { orderReducer } from "./reducers/order";
 
 
+// import { authStore } from "./reducers/authStore";
+import authStore from './reducers/authStore'; // ✅ Correct
+
+import myCounterSlice  from './myCounterSlice';
+
+
+ 
 const Store = configureStore({
   reducer: {
     user: userReducer,
@@ -18,6 +25,8 @@ const Store = configureStore({
     cart: cartReducer,
     wishlist: wishlistReducer,
     order: orderReducer,
+    auth: authStore,
+    myCounter: myCounterSlice
   },
 });
 
