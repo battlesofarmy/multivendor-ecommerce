@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import {
   LoginPage,
   SignupPage,
@@ -60,6 +61,8 @@ import axios from "axios";
 import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import MyHomepage from "./try/Myhome.jsx";
+import MyAbout from "./try/MyAbout.jsx";
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
@@ -77,6 +80,14 @@ const App = () => {
   }, []);
 
   return (
+    // <BrowserRouter>
+    //   <Routes>
+    //       <Route path="/" element={<MyHomepage/>} />
+    //       <Route path="/" element={<MyAbout />} />
+    //   </Routes>
+    // </BrowserRouter>
+
+
     <BrowserRouter>
       {stripeApikey && (
         <Elements stripe={loadStripe(stripeApikey)}>
@@ -92,6 +103,7 @@ const App = () => {
           </Routes>
         </Elements>
       )}
+      
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />

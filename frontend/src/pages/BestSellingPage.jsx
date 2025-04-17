@@ -307,6 +307,7 @@ const BestSellingPage = () => {
       ) : (
         <div>
           <Header activeHeading={2} />
+          <h2>/best-selling</h2>
           <br />
           <br />
           <div className={`${styles.section}`}>

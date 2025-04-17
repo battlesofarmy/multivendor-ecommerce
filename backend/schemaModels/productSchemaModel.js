@@ -38,5 +38,3 @@ const productSchema = mongoose.Schema({
 }, {versitionKey: false});
 
 module.exports = mongoose.model("Product",productSchema);
-
-

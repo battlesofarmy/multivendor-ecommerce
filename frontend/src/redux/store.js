@@ -8,8 +8,7 @@ import { wishlistReducer } from "./reducers/wishlist";
 import { orderReducer } from "./reducers/order";
 
 
-// import { authStore } from "./reducers/authStore";
-import authStore from './reducers/authStore'; // ✅ Correct
+import authReducer from './reducers/authSlice'; // ✅ Correct
 
 import myCounterSlice  from './myCounterSlice';
 
@@ -19,13 +18,12 @@ const Store = configureStore({
   reducer: {
     user: userReducer,
     seller: sellerReducer,
-    
     products: productReducer,
     events: eventReducer,
     cart: cartReducer,
     wishlist: wishlistReducer,
     order: orderReducer,
-    auth: authStore,
+    auth: authReducer,
     myCounter: myCounterSlice
   },
 });

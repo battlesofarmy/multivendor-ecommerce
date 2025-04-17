@@ -1,16 +1,25 @@
-import { React, useState } from "react";
+"use client";
+
+import { React, useEffect, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signInUser } from "../../redux/reducers/authStore";
+// import { signInUser } from "../../redux/reducers/authSlice";
+import { loginUser } from "../../redux/actions/authAction";
+
 
 const Login = () => {
   const dispatch = useDispatch();
+  // const { user, loading } = useSelector((state) => state.auth);
+
+  // useEffect(() => {
+  //   dispatch(observeAuthState());
+  // }, [dispatch, user]);
+
   
   // States
   const navigate = useNavigate();
-  // const { signInUser } = useAuthStore();
   const [showPass, setShowPass] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
@@ -27,17 +36,20 @@ const Login = () => {
     setSuccessMsg("");
     setErrMsg("");
 
+    dispatch(loginUser({ email, password }));
+    navigate('/');
 
-    const result = await dispatch(signInUser({ email, password }));
 
-    if (signInUser.fulfilled.match(result)) {
-      // success
-      console.log("Login success!", result.payload);
-      navigate('/');
-    } else {
-      // error
-      console.error("Login error:", result.payload || result.error.message);
-    }
+    // const result = await dispatch(signInUser({ email, password }));
+
+    // if (signInUser.fulfilled.match(result)) {
+    //   // success
+    //   console.log("Login success!", result.payload);
+    //   navigate('/');
+    // } else {
+    //   // error
+    //   console.error("Login error:", result.payload || result.error.message);
+    // }
 
     // Check User Login
     // signInUser(email, password)

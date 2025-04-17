@@ -12,8 +12,9 @@ router.get('/', async(req, res)=>{
     }
 })
 
+// Search a single products
 router.get('/:id', async(req, res)=>{
-    console.log(req.params.id)
+    // console.log(req.params.id)
     try{
         const result = await Product.findOne({_id: req.params.id});
         res.status(200).send(result);

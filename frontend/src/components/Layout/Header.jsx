@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "../../styles/styles";
 import { categoriesData } from "../../static/data";
@@ -16,9 +16,10 @@ import { useDispatch, useSelector } from "react-redux";
 import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
 import { RxCross1 } from "react-icons/rx";
+import { observeAuthState } from "../../redux/actions/authAction";
 
 const Header = ({ activeHeading }) => {
-  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector((state) => state.user);
   const { isSeller } = useSelector((state) => state.seller);
   const { wishlist } = useSelector((state) => state.wishlist);
   const { cart } = useSelector((state) => state.cart);
@@ -31,8 +32,14 @@ const Header = ({ activeHeading }) => {
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
-  // const dispatch = useDispatch();
-  // const result = dispatch(signInUser({ email, password }));
+  const { user } = useSelector((state)=> state.auth);
+
+  const dispatch = useDispatch();
+
+    useEffect(() => {
+      dispatch(observeAuthState());
+      console.log(user, " user");
+    }, [dispatch, user]);
   
 
   const handleSearchChange = (e) => {
@@ -177,7 +184,7 @@ const Header = ({ activeHeading }) => {
 
             <div className={`${styles.noramlFlex}`}>
               <div className="relative cursor-pointer mr-[15px]">
-                {isAuthenticated ? (
+                {user ? (
                   <Link to="/profile">
                     <img
                       src={`${user?.avatar?.url}`}

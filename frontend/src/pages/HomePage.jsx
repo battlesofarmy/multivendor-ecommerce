@@ -13,10 +13,11 @@ import {declude, include} from '../redux/myCounterSlice'
 const HomePage = () => {
   const dispatch = useDispatch();
   const myCounter = useSelector((state)=> state.myCounter.value);
+  const {observeAuthState}  = useSelector((state)=> state.auth);
   return (
     <div>
 
-<div className="p-5">
+{/* <div className="p-5">
         <h2 className="text-2xl font-bold">Counter: {myCounter}</h2>
         <button
           onClick={() => dispatch(include())}
@@ -30,10 +31,10 @@ const HomePage = () => {
         >
           -
         </button>
-      </div>
+      </div> */}
 
         <Header activeHeading={1} />
-        <Hero />
+        <Hero /> 
         <Categories />
         <BestDeals />
         {/* <Events /> */}

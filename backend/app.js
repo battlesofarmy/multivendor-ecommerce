@@ -1,7 +1,7 @@
 const express = require("express");
 // const ErrorHandler = require("./middleware/error");
 const app = express();
-const cookieParser = require("cookie-parser");
+// const cookieParser = require("cookie-parser");
 // const bodyParser = require("body-parser");
 const cors = require("cors");
 
@@ -22,6 +22,7 @@ app.get("/", (req, res) => {
   console.log("world");
   res.send("Hello");
 });
+
 module.exports = app;
 
 

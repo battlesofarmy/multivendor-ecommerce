@@ -20,5 +20,4 @@ const Navbar = ({active}) => {
     </div>
   )
 }
-
 export default Navbar
