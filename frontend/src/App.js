@@ -63,9 +63,13 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import MyHomepage from "./try/Myhome.jsx";
 import MyAbout from "./try/MyAbout.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { observeAuthState } from "./redux/actions/authAction.js";
+
 
 const App = () => {
   const [stripeApikey, setStripeApiKey] = useState("");
+  const { user } = useSelector((state)=> state.auth)
 
   async function getStripeApikey() {
     const { data } = await axios.get(`${server}/payment/stripeapikey`);
@@ -77,7 +81,21 @@ const App = () => {
     Store.dispatch(getAllProducts());
     Store.dispatch(getAllEvents());
     getStripeApikey();
+
+
+    // dispatch(observeAuthState());
+    // console.log(user, " user");
   }, []);
+
+  
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(observeAuthState());
+    console.log(user, " user")
+  },[])
+
+
+  
 
   return (
     // <BrowserRouter>
@@ -137,6 +155,8 @@ const App = () => {
               <ProfilePage />
             </ProtectedRoute>
           }
+          // element={ <ProfilePage /> }
+          // element={ <MyHomepage /> }
         />
         <Route
           path="/inbox"
@@ -185,9 +205,9 @@ const App = () => {
         <Route
           path="/dashboard"
           element={
-            <SellerProtectedRoute>
+            // <SellerProtectedRoute>
               <ShopDashboardPage />
-            </SellerProtectedRoute>
+            // </SellerProtectedRoute>
           }
         />
         <Route

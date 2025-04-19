@@ -191,7 +191,7 @@ export const navItems = [
   export const categoriesData = [
     {
       id: 1,
-      title: "Computers and Laptops",
+      title: "Leptops",
       subTitle: "",
       image_Url:
         "https://cdn.shopify.com/s/files/1/1706/9177/products/NEWAppleMacbookProwithM1ProChip14InchLaptop2021ModelMKGQ3LL_A_16GB_1TBSSD_custommacbd.jpg?v=1659592838",

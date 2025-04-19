@@ -17,6 +17,7 @@ import Cart from "../cart/Cart";
 import Wishlist from "../Wishlist/Wishlist";
 import { RxCross1 } from "react-icons/rx";
 import { observeAuthState } from "../../redux/actions/authAction";
+import Loader from "./Loader";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -32,14 +33,14 @@ const Header = ({ activeHeading }) => {
   const [openWishlist, setOpenWishlist] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const { user } = useSelector((state)=> state.auth);
+  const { user, loading } = useSelector((state)=> state.auth);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-    useEffect(() => {
-      dispatch(observeAuthState());
-      console.log(user, " user");
-    }, [dispatch, user]);
+    // useEffect(() => {
+    //   dispatch(observeAuthState());
+    //   console.log(user, " user");
+    // }, [dispatch, user]);
   
 
   const handleSearchChange = (e) => {
@@ -55,6 +56,8 @@ const Header = ({ activeHeading }) => {
     setSearchData(filteredProducts);
   };
 
+  
+
   window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
       setActive(true);
@@ -65,6 +68,7 @@ const Header = ({ activeHeading }) => {
 
   return (
     <>
+
       <div className={`${styles.section}`}>
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <div>
@@ -187,8 +191,8 @@ const Header = ({ activeHeading }) => {
                 {user ? (
                   <Link to="/profile">
                     <img
-                      src={`${user?.avatar?.url}`}
-                      className="w-[35px] h-[35px] rounded-full"
+                      src={`${user?.photoURL}`}
+                      className="w-[40px] h-[40px] rounded-full"
                       alt=""
                     />
                   </Link>
@@ -335,7 +339,7 @@ const Header = ({ activeHeading }) => {
                 ) : (
                   <>
                     <Link
-                      to="/login"
+                      to="/loginjohfa"
                       className="text-[18px] pr-[10px] text-[#000000b7]"
                     >
                       Login /

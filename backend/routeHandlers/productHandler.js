@@ -5,12 +5,17 @@ const router = express.Router();
 
 router.get('/', async(req, res)=>{
     try{
-        const result = await Product.find({});
+        const { category } = req.query;
+        const filter = {};
+        if(category) filter.category = category;
+
+        const result = await Product.find(filter);
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);
     }
 })
+
 
 // Search a single products
 router.get('/:id', async(req, res)=>{
@@ -22,6 +27,9 @@ router.get('/:id', async(req, res)=>{
         res.status(500).send(err.message);
     }
 })
+
+
+
 
 // Delete all
 router.delete('/', async(req, res)=> {

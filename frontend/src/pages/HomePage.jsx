@@ -7,13 +7,8 @@ import FeaturedProduct from "../components/Route/FeaturedProduct/FeaturedProduct
 import Events from "../components/Events/Events";
 import Sponsored from "../components/Route/Sponsored";
 import Footer from "../components/Layout/Footer";
-import { useDispatch, useSelector } from 'react-redux';
-import {declude, include} from '../redux/myCounterSlice'
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-  const myCounter = useSelector((state)=> state.myCounter.value);
-  const {observeAuthState}  = useSelector((state)=> state.auth);
   return (
     <div>
 

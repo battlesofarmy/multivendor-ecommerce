@@ -157,10 +157,12 @@ import styles from "../../../styles/styles";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 import { toast } from "react-toastify";
 import Ratings from "../../Products/Ratings";
+import { useDispatch } from "react-redux";
 
 const ProductCard = ({ data, isEvent }) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
+
 
   const wishlist = [
     { _id: "prod-002", name: "Wireless Headphones", image: "https://via.placeholder.com/300", ratings: 4.5, originalPrice: 150, discountPrice: 100, sold_out: 120, stock: 80, shop: { name: "Tech Store", _id: "shop-001" } }
@@ -185,19 +187,22 @@ const ProductCard = ({ data, isEvent }) => {
   const addToWishlistHandler = (data) => {
     setClick(!click);
   };
+  const dispatch = useDispatch();
 
   const addToCartHandler = (id) => {
     const isItemExists = cart && cart.find((i) => i._id === id);
-    if (isItemExists) {
-      toast.error("Item already in cart!");
-    } else {
+    // dispatch()
+
+    // if (isItemExists) {
+    //   toast.error("Item already in cart!");
+    // } else {
       if (data.stock < 1) {
         toast.error("Product stock limited!");
       } else {
         const cartData = { ...data, qty: 1 };
-        toast.success("Item added to cart successfully!");
+        toast.success("Item added to cart successfully!", cartData);
       }
-    }
+    // }
   };
 
   return (
@@ -206,7 +211,7 @@ const ProductCard = ({ data, isEvent }) => {
         <div className="flex justify-end"></div>
         <Link to={`${isEvent === true ? `/product/${data._id}?isEvent=true` : `/product/${data._id}`}`}>
           <img
-            src={data?.image}
+            src={data?.images[0]?.url}
             alt=""
             className="w-full h-[170px] object-contain"
           />

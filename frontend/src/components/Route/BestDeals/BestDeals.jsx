@@ -45,13 +45,52 @@ import ProductCard from "../ProductCard/ProductCard";
 const BestDeals = () => {
 
   // Hardcoded product data
-  const data = [
-    { _id: "prod-001", name: "Smartphone A1", image: "https://admin.regalfurniturebd.com/storage/uploads/fullsize/2019-05/csc-205-7-1-66-a.jpg", ratings: 4.8, originalPrice: 1000, discountPrice: 850, sold_out: 300, stock: 50, shop: { name: "Tech Store", _id: "shop-001" } },
-    { _id: "prod-002", name: "Laptop X1", image: "https://admin.regalfurniturebd.com/storage/uploads/fullsize/2019-05/csc-205-7-1-66-a.jpg", ratings: 4.6, originalPrice: 1200, discountPrice: 950, sold_out: 200, stock: 40, shop: { name: "Gadget World", _id: "shop-002" } },
-    { _id: "prod-003", name: "Wireless Headphones", image: "https://admin.regalfurniturebd.com/storage/uploads/fullsize/2019-05/csc-205-7-1-66-a.jpg", ratings: 4.7, originalPrice: 150, discountPrice: 120, sold_out: 500, stock: 100, shop: { name: "Audio Shop", _id: "shop-003" } },
-    { _id: "prod-004", name: "Smartwatch Pro", image: "https://admin.regalfurniturebd.com/storage/uploads/fullsize/2019-05/csc-205-7-1-66-a.jpg", ratings: 4.5, originalPrice: 350, discountPrice: 250, sold_out: 400, stock: 60, shop: { name: "Wearable Store", _id: "shop-004" } },
-    { _id: "prod-005", name: "Gaming Headset", image: "https://admin.regalfurniturebd.com/storage/uploads/fullsize/2019-05/csc-205-7-1-66-a.jpg", ratings: 4.9, originalPrice: 100, discountPrice: 80, sold_out: 600, stock: 80, shop: { name: "Gaming Gear", _id: "shop-005" } }
-  ];
+ const data = [
+  {
+    "_id": "68033bd678d08ebe0cecd328",
+    "soldOut": "0",
+    "createdAt": "2025-04-19T00:26:20.254Z",
+    "name": "Dell XPS 13 Laptop",
+    "category": "Accesories",
+    "description": "Experience the power of the Dell XPS 13 with its sleek design and high-performance capabilities.",
+    "originalPrice": "1200",
+    "discountPrice": "999",
+    "stock": 25,
+    "ratings": 5,
+    "images": [
+      {
+        "_id": "68033d8625ac685c51b86cc0",
+        "url": "https://rang-bd.com/wp-content/uploads/2024/06/NKM-JWY-00060-3-595x595.webp"
+      },
+      {
+        "_id": "68033d8625ac685c51b86cc1",
+        "url": "https://rang-bd.com/wp-content/uploads/2024/06/NKM-JWY-00060-1-scaled.webp"
+      }
+    ],
+    "reviews": [
+      {
+        "user": {
+          "avatar": {
+            "url": "https://avatars.githubusercontent.com/u/155252694?v=4"
+          },
+          "name": "Hank"
+        },
+        "_id": "680335c9ee728686f727812f",
+        "rating": 5,
+        "comment": "Exceptional performance and build quality."
+      }
+    ],
+    "shop": {
+      "_id": "shop123",
+      "name": "NewMarket",
+      "avatar": {
+        "url": "https://avatars.githubusercontent.com/u/155252694?v=4"
+      },
+      "description": "Selling high-tech electronics since 2020.",
+      "createdAt": "2022-01-01T00:00:00Z"
+    }
+  }
+];
 
 
   return (

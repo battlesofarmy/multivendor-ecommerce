@@ -36,8 +36,18 @@ const Login = () => {
     setSuccessMsg("");
     setErrMsg("");
 
-    dispatch(loginUser({ email, password }));
-    navigate('/');
+    try{
+      await dispatch(loginUser({email, password})).unwrap();
+      console.log("Logint succesfull");
+      navigate('/profile');
+      window.location.reload();
+
+    }catch(err){
+       console.error("Login failed:", err);
+    }
+
+    // dispatch(loginUser({ email, password }));
+    // navigate('/');
 
 
     // const result = await dispatch(signInUser({ email, password }));
@@ -61,7 +71,7 @@ const Login = () => {
     //   });
   };
 
- 
+
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -172,7 +182,6 @@ const Login = () => {
                   <p>{errMsg}</p>
                 </div>
               )}
-
 
             </div>
             <div className={`${styles.noramlFlex} w-full`}>

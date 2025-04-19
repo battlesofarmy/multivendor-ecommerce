@@ -5,7 +5,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
-    loading: false,
+    loading: true,
     error: null,
   },
   reducers: {},
@@ -53,9 +53,23 @@ const authSlice = createSlice({
       })
 
       // Observe Auth State
+      // .addCase(observeAuthState.fulfilled, (state, action) => {
+      //   state.user = action.payload;
+      // });
+
+      // Observe Auth State
+      .addCase(observeAuthState.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(observeAuthState.fulfilled, (state, action) => {
         state.user = action.payload;
+        state.loading = false;
+      })
+      .addCase(observeAuthState.rejected, (state) => {
+        state.user = null;
+        state.loading = false;
       });
+
   },
 });
 

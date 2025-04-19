@@ -1,0 +1,83 @@
+[
+    {
+        "soldOut": "0",
+        "createdAt": "2025-04-19T00:26:20.254Z",
+        "name": "Dell XPS 13 Laptop",
+        "category": "Leptops",
+        "description": "Experience the power of the Dell XPS 13 with its sleek design and high-performance capabilities.",
+        "originalPrice": "1200",
+        "discountPrice": "999",
+        "stock": 25,
+        "ratings": 5,
+        "images": [
+          {
+            "url": "https://www.startech.com.bd/image/cache/catalog/laptop/lenovo/ideapad-slim-1i-15igl7/ideapad-slim-1i-15igl7-01-500x500.webp"
+          },
+          {
+            "url": "https://www.startech.com.bd/image/cache/catalog/laptop/lenovo/yoga-7-2-in-1-14ahp9/yoga-7-2-in-1-14ahp9-01-500x500.webp"
+          }
+        ],
+        "reviews": [
+          {
+            "user": {
+              "avatar": {
+                "url": "https://avatars.githubusercontent.com/u/155252694?v=4"
+              },
+              "name": "Hank"
+            },
+            "_id": "680335c9ee728686f727812f",
+            "rating": 5,
+            "comment": "Exceptional performance and build quality."
+          }
+        ],
+        "shop": {
+          "_id": "shop123",
+          "name": "TechZone",
+          "avatar": {
+            "url": "https://avatars.githubusercontent.com/u/155252694?v=4"
+          },
+          "description": "Selling high-tech electronics since 2020.",
+          "createdAt": "2022-01-01T00:00:00Z"
+        }
+      },{
+        "soldOut": "0",
+        "createdAt": "2025-04-19T00:26:20.254Z",
+        "name": "Dell XPS 13 Laptop",
+        "category": "Accesories",
+        "description": "Experience the power of the Dell XPS 13 with its sleek design and high-performance capabilities.",
+        "originalPrice": "1200",
+        "discountPrice": "999",
+        "stock": 25,
+        "ratings": 5,
+        "images": [
+          {
+            "url": "https://rang-bd.com/wp-content/uploads/2024/06/NKM-JWY-00060-3-595x595.webp"
+          },
+          {
+            "url": "https://rang-bd.com/wp-content/uploads/2024/06/NKM-JWY-00060-1-scaled.webp"
+          }
+        ],
+        "reviews": [
+          {
+            "user": {
+              "avatar": {
+                "url": "https://avatars.githubusercontent.com/u/155252694?v=4"
+              },
+              "name": "Hank"
+            },
+            "_id": "680335c9ee728686f727812f",
+            "rating": 5,
+            "comment": "Exceptional performance and build quality."
+          }
+        ],
+        "shop": {
+          "_id": "shop123",
+          "name": "NewMarket",
+          "avatar": {
+            "url": "https://avatars.githubusercontent.com/u/155252694?v=4"
+          },
+          "description": "Selling high-tech electronics since 2020.",
+          "createdAt": "2022-01-01T00:00:00Z"
+        }
+      }
+]

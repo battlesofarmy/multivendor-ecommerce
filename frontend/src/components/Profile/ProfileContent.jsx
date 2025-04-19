@@ -25,8 +25,9 @@ import axios from "axios";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
 
 const ProfileContent = ({ active }) => {
-  const { user, error, successMessage } = useSelector((state) => state.user);
-  const [name, setName] = useState(user && user?.name);
+  const { user } = useSelector((state)=> state.auth);
+  const { error, successMessage } = useSelector((state) => state.user);
+  const [name, setName] = useState(user && user?.displayName);
   const [email, setEmail] = useState(user && user?.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user?.phoneNumber);
   const [password, setPassword] = useState("");
@@ -42,6 +43,7 @@ const ProfileContent = ({ active }) => {
       toast.success(successMessage);
       dispatch({ type: "clearMessages" });
     }
+    console.log()
   }, [error, successMessage]);
 
   const handleSubmit = (e) => {
@@ -83,8 +85,11 @@ const ProfileContent = ({ active }) => {
         <>
           <div className="flex justify-center w-full">
             <div className="relative">
+              {
+                console.log(user)
+              }
               <img
-                src={`${user?.avatar?.url}`}
+                src={`${user?.photoURL}`}
                 className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
                 alt=""
               />

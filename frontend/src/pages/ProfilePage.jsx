@@ -7,7 +7,7 @@ import ProfileContent from "../components/Profile/ProfileContent";
 import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
-  const { loading } = useSelector((state) => state.user);
+  const { loading } = useSelector((state) => state.auth);
   const [active, setActive] = useState(1);
 
   return (
@@ -24,7 +24,7 @@ const ProfilePage = () => {
             <ProfileContent active={active} />
           </div>
         </>
-      )}
+       )} 
     </div>
   );
 };
