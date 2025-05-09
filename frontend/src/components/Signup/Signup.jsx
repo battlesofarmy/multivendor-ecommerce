@@ -79,7 +79,7 @@ const Singup = () => {
         registerUser({ email, password, displayName: name, photoURL, phoneNumber })
       ).unwrap();
       console.log("Registration successful:", result);
-      navigate('/login')
+      navigate('/profile')
       
     } catch (err) {
       console.log("Registration failed:", err);
