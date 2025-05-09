@@ -80,7 +80,7 @@ const App = () => {
     Store.dispatch(loadSeller());
     Store.dispatch(getAllProducts());
     Store.dispatch(getAllEvents());
-    getStripeApikey();
+    // getStripeApikey();
 
 
     // dispatch(observeAuthState());

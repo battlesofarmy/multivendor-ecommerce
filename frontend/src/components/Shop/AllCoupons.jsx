@@ -1,5 +1,3 @@
-// import { Button } from "@material-ui/core";
-// import { DataGrid } from "@material-ui/data-grid";
 // import axios from "axios";
 // import React, { useEffect, useState } from "react";
 // import { AiOutlineDelete } from "react-icons/ai";
@@ -251,8 +249,8 @@
 
 
 import React, { useState } from "react";
-import { Button } from "@material-ui/core";
-import { DataGrid } from "@material-ui/data-grid";
+import { Button } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/styles";
