@@ -10,11 +10,16 @@ import styles from "../../../styles/styles";
 import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 import { toast } from "react-toastify";
 import Ratings from "../../Products/Ratings";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlistThunk } from "../../../redux/actions/wishlist";
 
 const ProductCard = ({ data, isEvent }) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
+
+  const dispatch = useDispatch();
+  // const wishlistItems = useSelector((state) => state.wishlist.wishlist);
+  // console.log(wishlistItems, " johfa")
 
 
   const wishlist = [
@@ -37,20 +42,21 @@ const ProductCard = ({ data, isEvent }) => {
     setClick(!click);
   };
 
+
   const addToWishlistHandler = (data) => {
-    const wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
-  //   console.log(data)
-    const isExists = wishlistItems.filter(ele=> ele._id === data._id);
-    console.log(isExists);
+  //   const wishlistItems = JSON.parse(localStorage.getItem("wishlist")) || [];
+  // //   console.log(data)
+  //   const isExists = wishlistItems.filter(ele=> ele._id === data._id);
+  //   console.log(isExists);
     
-    if(isExists.length===0){
-      wishlistItems.push(data);
-      localStorage.setItem("wishlist", JSON.stringify(wishlistItems))
-    }
+  //   if(isExists.length===0){
+  //     wishlistItems.push(data);
+  //     localStorage.setItem("wishlist", JSON.stringify(wishlistItems))
+  //   }
+  dispatch(addToWishlistThunk(data));
     
     setClick(!click);
   };
-  const dispatch = useDispatch();
 
   const addToCartHandler = (id) => {
     const isItemExists = cart && cart.find((i) => i._id === id);

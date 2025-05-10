@@ -12,8 +12,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 // import { addTocart } from "../../../redux/actions/cart";
 import {
-  addToWishlist,
-  removeFromWishlist,
+  addToWishlistThunk,
+  removeFromWishlistThunk,
 } from "../../../redux/actions/wishlist";
 
 const ProductDetailsCard = ({ setOpen, data }) => {
@@ -61,12 +61,12 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
   const removeFromWishlistHandler = (data) => {
     setClick(!click);
-    dispatch(removeFromWishlist(data));
+    dispatch(removeFromWishlistThunk(data));
   };
 
   const addToWishlistHandler = (data) => {
     setClick(!click);
-    dispatch(addToWishlist(data));
+    dispatch(addToWishlistThunk(data));
   };
 
   return (

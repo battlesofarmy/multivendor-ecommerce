@@ -1,21 +1,22 @@
-// add to wishlist
-export const addToWishlist = (data) => async (dispatch, getState) => {
-    dispatch({
-      type: "addToWishlist",
-      payload: data,
-    });
-  
-    localStorage.setItem("wishlistItems", JSON.stringify(getState().wishlist.wishlist));
-    return data;
-  };
-  
-  // remove from wishlist
-  export const removeFromWishlist = (data) => async (dispatch, getState) => {
-    dispatch({
-      type: "removeFromWishlist",
-      payload: data._id,
-    });
-    localStorage.setItem("wishlistItems", JSON.stringify(getState().wishlist.wishlist));
-    return data;
-  };
-  
+// wishlistActions.js
+import { addToWishlist, removeFromWishlist } from "../reducers/wishlist";
+
+// Add to wishlist
+export const addToWishlistThunk = (data) => async (dispatch, getState) => {
+  dispatch(addToWishlist(data));
+  localStorage.setItem(
+    "wishlist",
+    JSON.stringify(getState().wishlist.wishlist)
+  );
+  return data;
+};
+
+// Remove from wishlist
+export const removeFromWishlistThunk = (data) => async (dispatch, getState) => {
+  dispatch(removeFromWishlist(data._id));
+  localStorage.setItem(
+    "wishlist",
+    JSON.stringify(getState().wishlist.wishlist)
+  );
+  return data;
+};
