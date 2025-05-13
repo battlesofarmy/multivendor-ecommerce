@@ -401,8 +401,10 @@ import {
   AiOutlineMessage,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { addToWishlistThunk, removeFromWishlistThunk } from "../../redux/actions/wishlist";
 
 // Mock styles module
 const styles = {
@@ -452,10 +454,25 @@ const ProductDetails = ({data}) => {
   const [count, setCount] = useState(1);
   const [click, setClick] = useState(false);
   const [select, setSelect] = useState(0);
+  const dispatch = useDispatch();
+  const { wishlist } = useSelector((state)=> state.wishlist);
+
+  useEffect(()=>{
+    // const result = wishlist?.map(ele=> console.log(ele._id));
+    // if(result) setClick(true);
+    console.log(data._id)
+  },[wishlist])
 
   const incrementCount = () => setCount(count + 1);
   const decrementCount = () => count > 1 && setCount(count - 1);
-  const toggleWishlist = () => setClick(!click);
+  const toggleWishlist = () =>{
+    if(click){
+      dispatch(removeFromWishlistThunk(data._id))
+    }else{
+      dispatch(addToWishlistThunk(data))
+    }
+    setClick(!click);
+  }
   const addToCartHandler = () => toast.success("Added to cart!");
 
   const handleMessageSubmit = () => toast.info("Chat started with seller!");
