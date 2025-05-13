@@ -2,65 +2,19 @@ import { React, useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
-import { RxAvatar } from "react-icons/rx";
-import axios from "axios";
-import { server } from "../../server";
-import { toast } from "react-toastify";
 import { registerUser } from '../../redux/actions/authAction'
 import { useDispatch, useSelector } from "react-redux";
 
 
 const Singup = () => {
-  const {user} = useSelector((state)=> state.auth);
-  // const [email, setEmail] = useState("");
-  // const [name, setName] = useState("");
-  // const [password, setPassword] = useState("");
+  const { user } = useSelector((state)=> state.auth);
   const [visible, setVisible] = useState(false);
-  // const [avatar, setAvatar] = useState(null);
+  const [errorMessage, setErrorMessage] = useState("Hello Johfa Tahsin");
+  const [successMessage, setSuccessMessage] = useState("")
 
-  // const handleFileInputChange = (e) => {
-  //   const reader = new FileReader();
 
-  //   reader.onload = () => {
-  //     if (reader.readyState === 2) {
-  //       setAvatar(reader.result);
-  //     }
-  //   };
-
-  //   reader.readAsDataURL(e.target.files[0]);
-  // };
   const dispatch = useDispatch();
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const form = e.target;
-  //   const name = form.name.value;
-  //   const email = form.email.value;
-  //   const password = form.password.value;
-
-  //   try{
-  //      const result = await dispatch(registerUser({email, password})).unwrap();
-  //      console.log("Registration successfull: ", result)
-  //   }catch(err){
-  //     console.log(err, " registeration fail")
-  //   }
-
-
-
-
-  //   // axios
-  //   //   .post(`${server}/user/create-user`, { name, email, password, avatar })
-  //   //   .then((res) => {
-  //   //     toast.success(res.data.message);
-  //   //     setName("");
-  //   //     setEmail("");
-  //   //     setPassword("");
-  //   //     setAvatar();
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     toast.error(error.response.data.message);
-  //   //   });
-  // };
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -72,17 +26,19 @@ const Singup = () => {
     const phoneNumber = form.number.value;
     // const photoURL = form.photoURL?.value || "https://avatars.githubusercontent.com/u/155252694?v=4"; // optional if you have a field for it
     const photoURL = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM8LrGjiUDcvYjUMk7jUJJZo0kK4Y4NzKxmQ&s"; // optional if you have a field for it
-  
+    
+    setErrorMessage("");
     
     try {
       const result = await dispatch(
         registerUser({ email, password, displayName: name, photoURL, phoneNumber })
       ).unwrap();
       console.log("Registration successful:", result);
+      setSuccessMessage(result);
       navigate('/profile')
       
     } catch (err) {
-      console.log("Registration failed:", err);
+      setErrorMessage(err.message);
     }
   };
   
@@ -93,9 +49,6 @@ const Singup = () => {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Register as a new user
         </h2>
-        {
-            console.log(user, " johfa")
-        }
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
@@ -224,6 +177,12 @@ const Singup = () => {
               >
                 Submit
               </button>
+            {
+              errorMessage && <h2 className="text-red-600">{errorMessage}</h2>
+            }
+            {
+              successMessage && <h2 className="text-red-600">Error</h2>
+            }
             </div>
             <div className={`${styles.noramlFlex} w-full`}>
               <h4>Already have an account?</h4>
