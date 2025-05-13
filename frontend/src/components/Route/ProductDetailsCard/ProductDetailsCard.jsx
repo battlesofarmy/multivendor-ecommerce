@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import styles from "../../../styles/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-// import { addTocart } from "../../../redux/actions/cart";
 import {
   addToWishlistThunk,
   removeFromWishlistThunk,
@@ -61,7 +60,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
 
   const removeFromWishlistHandler = (data) => {
     setClick(!click);
-    dispatch(removeFromWishlistThunk(data));
+    dispatch(removeFromWishlistThunk(data._id));
   };
 
   const addToWishlistHandler = (data) => {

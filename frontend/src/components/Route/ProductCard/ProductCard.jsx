@@ -11,20 +11,19 @@ import ProductDetailsCard from "../ProductDetailsCard/ProductDetailsCard";
 import { toast } from "react-toastify";
 import Ratings from "../../Products/Ratings";
 import { useDispatch, useSelector } from "react-redux";
-import { addToWishlistThunk } from "../../../redux/actions/wishlist";
+import { addToWishlistThunk, removeFromWishlistThunk } from "../../../redux/actions/wishlist";
 
 const ProductCard = ({ data, isEvent }) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
 
   const dispatch = useDispatch();
-  // const wishlistItems = useSelector((state) => state.wishlist.wishlist);
-  // console.log(wishlistItems, " johfa")
+  const wishlist = useSelector((state) => state.wishlist.wishlist);
 
 
-  const wishlist = [
-    { _id: "prod-002", name: "Wireless Headphones", image: "https://via.placeholder.com/300", ratings: 4.5, originalPrice: 150, discountPrice: 100, sold_out: 120, stock: 80, shop: { name: "Tech Store", _id: "shop-001" } }
-  ];
+  // const wishlist = [
+  //   { _id: "prod-002", name: "Wireless Headphones", image: "https://via.placeholder.com/300", ratings: 4.5, originalPrice: 150, discountPrice: 100, sold_out: 120, stock: 80, shop: { name: "Tech Store", _id: "shop-001" } }
+  // ];
   
   const cart = [
     { _id: "prod-003", name: "Laptop X1", image: "https://via.placeholder.com/300", ratings: 4.8, originalPrice: 1200, discountPrice: 900, sold_out: 200, stock: 50, shop: { name: "Tech Hub", _id: "shop-002" } }
@@ -39,6 +38,7 @@ const ProductCard = ({ data, isEvent }) => {
   }, [wishlist]);
 
   const removeFromWishlistHandler = (data) => {
+    dispatch(removeFromWishlistThunk(data._id))
     setClick(!click);
   };
 
