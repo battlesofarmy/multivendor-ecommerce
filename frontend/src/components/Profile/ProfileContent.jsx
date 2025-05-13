@@ -12,21 +12,15 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { MdTrackChanges } from "react-icons/md";
 import { RxCross1 } from "react-icons/rx";
-import {
-  deleteUserAddress,
-  loadUser,
-  updatUserAddress,
-  updateUserInformation,
-} from "../../redux/actions/user";
 import { Country, State } from "country-state-city";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
+import { fetchUserData } from "../../redux/actions/user";
 
 const ProfileContent = ({ active }) => {
   const { user } = useSelector((state)=> state.auth);
-  const { error, successMessage } = useSelector((state) => state.user);
   const [name, setName] = useState(user && user?.displayName);
   const [email, setEmail] = useState(user && user?.email);
   const [phoneNumber, setPhoneNumber] = useState(user && user?.phoneNumber);
@@ -34,46 +28,21 @@ const ProfileContent = ({ active }) => {
   const [setAvatar] = useState(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-      dispatch({ type: "clearErrors" });
-    }
-    if (successMessage) {
-      toast.success(successMessage);
-      dispatch({ type: "clearMessages" });
-    }
-    console.log()
-  }, [error, successMessage]);
+
+  const userData  = useSelector((state)=> state.user.userData);
+    console.log(userData  , " user data")
+  
+    useEffect(() => {
+      dispatch(fetchUserData()); // ✅ Dispatching thunk
+    }, [dispatch]);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateUserInformation(name, email, phoneNumber, password));
   };
 
   const handleImage = async (e) => {
     const reader = new FileReader();
-
-    reader.onload = () => {
-      if (reader.readyState === 2) {
-        setAvatar(reader.result);
-        axios
-          .put(
-            `${server}/user/update-avatar`,
-            { avatar: reader.result },
-            {
-              withCredentials: true,
-            }
-          )
-          .then((response) => {
-            dispatch(loadUser());
-            toast.success("avatar updated successfully!");
-          })
-          .catch((error) => {
-            toast.error(error);
-          });
-      }
-    };
 
     reader.readAsDataURL(e.target.files[0]);
   };
@@ -566,32 +535,31 @@ const Address = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (addressType === "" || country === "" || city === "") {
-      toast.error("Please fill all the fields!");
-    } else {
-      dispatch(
-        updatUserAddress(
-          country,
-          city,
-          address1,
-          address2,
-          zipCode,
-          addressType
-        )
-      );
-      setOpen(false);
-      setCountry("");
-      setCity("");
-      setAddress1("");
-      setAddress2("");
-      setZipCode(null);
-      setAddressType("");
-    }
+    // if (addressType === "" || country === "" || city === "") {
+    //   toast.error("Please fill all the fields!");
+    // } else {
+    //   dispatch(
+    //     updatUserAddress(
+    //       country,
+    //       city,
+    //       address1,
+    //       address2,
+    //       zipCode,
+    //       addressType
+    //     )
+    //   );
+    //   setOpen(false);
+    //   setCountry("");
+    //   setCity("");
+    //   setAddress1("");
+    //   setAddress2("");
+    //   setZipCode(null);
+    //   setAddressType("");
+    // }
   };
 
   const handleDelete = (item) => {
     const id = item?._id;
-    dispatch(deleteUserAddress(id));
   };
 
   return (
@@ -783,3 +751,6 @@ const Address = () => {
   );
 };
 export default ProfileContent;
+
+
+

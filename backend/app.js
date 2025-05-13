@@ -12,10 +12,10 @@ app.use(cors({
 }));
 
 
-
 const productHandler = require('./routeHandlers/productHandler');
+const userHandler = require('./routeHandlers/userHanlder');
 app.use('/products', productHandler);
-
+app.use('/user', userHandler);
 
 
 app.get("/", (req, res) => {

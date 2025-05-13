@@ -460,7 +460,7 @@ const ProductDetails = ({data}) => {
   useEffect(()=>{
     // const result = wishlist?.map(ele=> console.log(ele._id));
     // if(result) setClick(true);
-    console.log(data._id)
+    // console.log(data._id)
   },[wishlist])
 
   const incrementCount = () => setCount(count + 1);

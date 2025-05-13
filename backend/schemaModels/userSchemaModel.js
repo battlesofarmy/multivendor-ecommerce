@@ -1,14 +1,9 @@
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
+    uid: {type: String, required: [true, "Enter Firebase UID"]},
     name: {type: String, required: [true, "Enter your Name"]},
     email: {type: String, required: [true, "Enter your email address"]},
-    password: {
-        type: String,
-        required: [true, "Please enter your password!"],
-        minLength: [6, "password should be use with"],
-        select: false
-    },
     phoneNumber: {type: Number},
     address: [{
         country: {type: String},
@@ -20,7 +15,7 @@ const userSchema = mongoose.Schema({
     }],
     role: {type: String, default: "user"},
     avatar: {
-        publicId: {tyep: String, required: true},
+        publicId: {type: String, required: true},
         url: {type: String, required: true}
     },
     createdAt: {type: Date, default: Date.now()},

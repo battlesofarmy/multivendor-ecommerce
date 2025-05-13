@@ -5,16 +5,22 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from '../../redux/actions/authAction'
 import { useDispatch, useSelector } from "react-redux";
 
-
 const Singup = () => {
   const { user } = useSelector((state)=> state.auth);
   const [visible, setVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("Hello Johfa Tahsin");
+  const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("")
+
+   const newUser = {
+    "uid" : "InQvT0PFhocAW9zUeMtZGjtgrAZ2",
+    "name" : "Muntasir Ahmed",
+    "email": "maf107714@gmail.com",
+    "profileImage" : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTM8LrGjiUDcvYjUMk7jUJJZo0kK4Y4NzKxmQ&s",
+    "role" : "user",
+   }
 
 
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -30,21 +36,22 @@ const Singup = () => {
     setErrorMessage("");
     
     try {
-      const result = await dispatch(
-        registerUser({ email, password, displayName: name, photoURL, phoneNumber })
+      await dispatch(
+        // registerUser({ email, password, displayName: name, photoURL, phoneNumber })
+        registerUser({ email, password })
       ).unwrap();
-      console.log("Registration successful:", result);
-      setSuccessMessage(result);
-      navigate('/profile')
-      
+      setSuccessMessage("Registration Successful");
+
+      setTimeout(() => {
+          navigate('/profile')
+      }, 1500);
     } catch (err) {
-      setErrorMessage(err.message);
+      setErrorMessage(err);
     }
   };
   
-  
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="bg-gray-50 flex flex-col justify-center py-10 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Register as a new user
@@ -178,10 +185,10 @@ const Singup = () => {
                 Submit
               </button>
             {
-              errorMessage && <h2 className="text-red-600">{errorMessage}</h2>
+              errorMessage && <h2 className="text-red-500 mt-2">{errorMessage}</h2>
             }
             {
-              successMessage && <h2 className="text-red-600">Error</h2>
+              successMessage && <h2 className="text-green-500 mt-2">{successMessage}</h2>
             }
             </div>
             <div className={`${styles.noramlFlex} w-full`}>
