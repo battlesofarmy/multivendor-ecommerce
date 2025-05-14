@@ -105,7 +105,7 @@ const DashboardHero = () => {
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
-    { field: "status", headerName: "Status", minWidth: 130, flex: 0.7, cellClassName: (params) => params.getValue(params.id, "status") === "Delivered" ? "greenColor" : "redColor" },
+    { field: "status", headerName: "Status", minWidth: 130, flex: 0.7, cellClassName: (params) => params.row.status === "Delivered" ? "greenColor" : "redColor"},
     { field: "itemsQty", headerName: "Items Qty", type: "number", minWidth: 130, flex: 0.7 },
     { field: "total", headerName: "Total", type: "number", minWidth: 130, flex: 0.8 },
     {

@@ -20,20 +20,23 @@ import { getAllOrdersOfUser } from "../../redux/actions/order";
 import { fetchUserData } from "../../redux/actions/user";
 
 const ProfileContent = ({ active }) => {
+  const getUserData  = useSelector((state)=> state.user.userData);
+  const [userData, setUserData ]  = useState(null);
   const { user } = useSelector((state)=> state.auth);
-  const [name, setName] = useState(user && user?.displayName);
-  const [email, setEmail] = useState(user && user?.email);
-  const [phoneNumber, setPhoneNumber] = useState(user && user?.phoneNumber);
+
+  const [name, setName] = useState(user && userData?.name);
+  const [email, setEmail] = useState(user && userData?.email);
+  const [phoneNumber, setPhoneNumber] = useState(userData && userData?.phoneNumber);
   const [password, setPassword] = useState("");
   const [setAvatar] = useState(null);
   const dispatch = useDispatch();
 
 
-  const userData  = useSelector((state)=> state.user.userData);
     console.log(userData  , " user data")
+    console.log(name, " user name");
   
     useEffect(() => {
-      dispatch(fetchUserData()); // ✅ Dispatching thunk
+      setUserData(getUserData);
     }, [dispatch]);
 
 
@@ -78,7 +81,7 @@ const ProfileContent = ({ active }) => {
           <br />
           <br />
           <div className="w-full px-5">
-            <form onSubmit={handleSubmit} aria-required={true}>
+            <form onSubmit={handleSubmit}>
               <div className="w-full 800px:flex block pb-3">
                 <div className=" w-[100%] 800px:w-[50%]">
                   <label className="block pb-2">Full Name</label>
@@ -86,7 +89,7 @@ const ProfileContent = ({ active }) => {
                     type="text"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                     required
-                    value={name}
+                    value={getUserData?.name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
@@ -111,17 +114,6 @@ const ProfileContent = ({ active }) => {
                     required
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
-                  />
-                </div>
-
-                <div className=" w-[100%] 800px:w-[50%]">
-                  <label className="block pb-2">Enter your password</label>
-                  <input
-                    type="password"
-                    className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </div>
               </div>
@@ -192,10 +184,9 @@ const AllOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        return params.row.status === "Delivered" ? "greenColor" : "redColor";
       },
+      
     },
     {
       field: "itemsQty",
@@ -280,9 +271,7 @@ const AllRefundOrders = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        return params.row.status === "Delivered" ? "greenColor" : "redColor";
       },
     },
     {
@@ -365,10 +354,9 @@ const TrackOrder = () => {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Delivered"
-          ? "greenColor"
-          : "redColor";
+        return params.row.status === "Delivered" ? "greenColor" : "redColor";
       },
+      
     },
     {
       field: "itemsQty",

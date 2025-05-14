@@ -7,9 +7,11 @@ import FeaturedProduct from "../components/Route/FeaturedProduct/FeaturedProduct
 import Events from "../components/Events/Events";
 import Sponsored from "../components/Route/Sponsored";
 import Footer from "../components/Layout/Footer";
+import { useSelector } from 'react-redux';
 
 
 const HomePage = () => {
+  const userData = useSelector((state)=> state.user.userData);
 
 
   return (
@@ -36,7 +38,6 @@ const HomePage = () => {
         <Categories />
         <BestDeals />
         {/* <Events /> */}
-        <h2>johfa</h2>
         {/* <FeaturedProduct /> */}
         <Sponsored />
         <Footer />

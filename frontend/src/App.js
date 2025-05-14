@@ -62,29 +62,33 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useDispatch, useSelector } from "react-redux";
 import { observeAuthState } from "./redux/actions/authAction.js";
+import { fetchUserData } from "./redux/actions/user.js";
 
 
 const App = () => {
   const { user } = useSelector((state)=> state.auth)
 
 
-  useEffect(() => {
+  // useEffect(() => {
     // Store.dispatch(loadUser());
     // Store.dispatch(loadSeller());
-    Store.dispatch(getAllProducts());
-    Store.dispatch(getAllEvents());
+    // Store.dispatch(getAllProducts());
+    // Store.dispatch(getAllEvents());
     // getStripeApikey();
-
 
     // dispatch(observeAuthState());
     // console.log(user, " user");
-  }, []);
-
+  // }, []);
+ 
   
   const dispatch = useDispatch()
+  
+  // console.log(user, " user")
+  
   useEffect(()=>{
+    // dispatch(fetchUserData(user?.uid)); // ✅ Dispatching thunk
+    dispatch(fetchUserData()); // ✅ Dispatching thunk
     dispatch(observeAuthState());
-    console.log(user, " user")
   },[])
 
 
@@ -284,9 +288,9 @@ const App = () => {
         <Route
           path="/admin-sellers"
           element={
-            <ProtectedAdminRoute>
+            // <ProtectedAdminRoute>
               <AdminDashboardSellers />
-            </ProtectedAdminRoute>
+            // </ProtectedAdminRoute>
           }
         />
         <Route
