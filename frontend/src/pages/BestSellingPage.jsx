@@ -55,7 +55,7 @@ const BestSellingPage = () => {
   
   // const [data, setData] = useState([]);
   // const { allProducts, isLoading } = useSelector((state) => state.products);
-  const { isLoading } = useSelector((state) => state.products);
+  // const { isLoading } = useSelector((state) => state.products);
 
   // useEffect(() => {
   //   if (Array.isArray(allProducts)) {
@@ -66,9 +66,9 @@ const BestSellingPage = () => {
   
   return (
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Loader />
-      ) : (
+      ) : ( */}
         <div>
           <Header activeHeading={2} />
           <h2>/best-selling</h2>
@@ -87,7 +87,7 @@ const BestSellingPage = () => {
           </div>
           <Footer />
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };
