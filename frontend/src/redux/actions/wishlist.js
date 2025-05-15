@@ -18,5 +18,5 @@ export const removeFromWishlistThunk = (_id) => async (dispatch, getState) => {
     "wishlist",
     JSON.stringify(getState().wishlist.wishlist)
   );
-  return _id;
+  return _id; 
 };
