@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
-const productSchema = mongoose.Schema({
+const cartSchema = mongoose.Schema({
     name: {type: String, required: [true, "Inter your product name"]},
+    email: {type: String, required: [true, "Inter your Email Address"]},
     description: {type: String, required: [true, "Inter your product description!"]},
     category: {type: String, required: [true, "Inter your product category!"]},
     tags: {type: String},
@@ -28,10 +29,10 @@ const productSchema = mongoose.Schema({
         }
     ],
     ratings: {type: Number}, 
-    shopId: {type: String, required: [true, "Inter your shop id"]},
     shop: {type: Object, required: true},
-    soldOut: {type: String, default: 0},
+    soldOut: {type: Number, default: 0},
+    count: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now()}
 }, {versitionKey: false});
 
-module.exports = mongoose.model("Product",productSchema);
+module.exports = mongoose.model("Cart",cartSchema);
