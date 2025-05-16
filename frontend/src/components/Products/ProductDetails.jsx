@@ -473,7 +473,10 @@ const ProductDetails = ({data}) => {
     }
     setClick(!click);
   }
-  const addToCartHandler = () => toast.success("Added to cart!");
+  const addToCartHandler = () =>{
+    
+    toast.success("Added to cart!");
+  }
 
   const handleMessageSubmit = () => toast.info("Chat started with seller!");
 

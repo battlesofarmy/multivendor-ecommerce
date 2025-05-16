@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const cartSchema = mongoose.Schema({
+    productId: {type: String, required: [true, "Inter product Id"]},
     name: {type: String, required: [true, "Inter your product name"]},
     email: {type: String, required: [true, "Inter your Email Address"]},
     description: {type: String, required: [true, "Inter your product description!"]},
@@ -31,7 +32,7 @@ const cartSchema = mongoose.Schema({
     ratings: {type: Number}, 
     shop: {type: Object, required: true},
     soldOut: {type: Number, default: 0},
-    count: {type: Number, default: 0},
+    count: {type: Number, default: 1},
     createdAt: {type: Date, default: Date.now()}
 }, {versitionKey: false});
 

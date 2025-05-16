@@ -4,18 +4,35 @@ const router = express.Router();
 
 
 router.post('/', async(req, res)=>{
-    console.log("cart route hiting")
+    const { productId, email } = req.body;
+    // console.log(req.body)
+    const exists = await Cart.findOne({productId, email});
+
+    if(exists){ 
+        console.log("Already here");
+        res.send("already here")
+    }else{
+        try{
+            const result = await Cart(req.body).save();
+            res.status(200).send(result);
+        }catch(err){
+            res.status(500).send(err.message);
+        }
+    }    
+})
+
+router.get('/', async(req, res)=>{
     try{
-        const result = await Cart(req.body).save();
+        const result = await Cart.find({});
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);
     }
 })
 
-router.get('/', async(req, res)=>{
+router.delete('/', async(req, res)=>{
     try{
-        const result = await Cart({});
+        const result = await Cart.deleteMany({});
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);
