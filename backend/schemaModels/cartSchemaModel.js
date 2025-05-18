@@ -7,8 +7,8 @@ const cartSchema = mongoose.Schema({
     description: {type: String, required: [true, "Inter your product description!"]},
     category: {type: String, required: [true, "Inter your product category!"]},
     tags: {type: String},
-    originalPrice: {type: String, required: [true, "Inter your product price"]},
-    discountPrice: {type: String, required: [true, "Inter your discount price"]},
+    originalPrice: {type: Number, required: [true, "Inter your product price"]},
+    discountPrice: {type: Number, required: [true, "Inter your discount price"]},
     stock: {type: Number, required: [true, "Inter your product stock"]},
     images: [
         {

@@ -42,31 +42,23 @@ const Singup = () => {
         // registerUser({ email, password, displayName: name, photoURL, phoneNumber })
         registerUser({ email, password })
       ).unwrap();
-      setSuccessMessage("Registration Successful");
        const newUser =   {
-    "avatar": {
-      "publicId": "avatar123",
-      "url": "https://example.com/uploads/avatar123.jpg"
-    },
-    "uid": user?.uid,
-    "name": "John Doe",
-    "email": "johndoe@example.com",
-    "phoneNumber": 1234567890,
-    "address": [
-      {
-        "country": "USA",
-        "city": "New York",
-        "address1": "123 5th Avenue",
-        "address2": "Apt 4B",
-        "zipCode": 10001,
-        "addressType": "Home",
-      }
-    ],
-    "role": "seller",
-  }
-      await api.post('/user', newUser);
+          "uid": user?.uid,
+          "name": name,
+          "email": user?.email,
+          "phoneNumber": phoneNumber,
+          "avatar": "https://avatars.githubusercontent.com/u/155252694?v=4",
+          "address": [],
+          "role": "user",
+        }
+      await api.post('/user', newUser)
+      .then((res)=>{
+        setSuccessMessage("Registration Successful");
+      })
+      .catch((err)=>{
+         setErrorMessage(err.message || "Registration Fail");
+      })
 
-      
       // setTimeout(() => {
       //     navigate('/profile')
       // }, 1500);

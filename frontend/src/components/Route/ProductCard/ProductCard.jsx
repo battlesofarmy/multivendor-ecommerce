@@ -22,14 +22,11 @@ const ProductCard = ({ data, isEvent }) => {
   const cart = useCartStore((state)=> state.cart);
    const addToCart = useCartStore((state) => state.addToCart);
 
-
-  console.log(cart, 'zustand cart');
+console.log(data)
 
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.wishlist);
   const { user } = useSelector((state)=> state.auth);
-
-
 
   useEffect(() => {
     if (wishlist && wishlist.find((i) => i._id === data._id)) {
@@ -74,11 +71,12 @@ const ProductCard = ({ data, isEvent }) => {
           const {_id, ...cardData} = data;
           cardData.email = user?.email;
           cardData.productId = data._id;
+          cardData.count = 1;
 
           await api.post('/cart', cardData)
           .then((res)=>toast.success("Item added to cart successfully!"))
           .catch((err)=> toast.error(err.message));
-          addToCart(data);
+          addToCart(cardData);
       }
   };
 

@@ -14,10 +14,7 @@ const userSchema = mongoose.Schema({
         addressType: {type: String}
     }],
     role: {type: String, default: "user"},
-    avatar: {
-        publicId: {type: String, required: true},
-        url: {type: String, required: true}
-    },
+    avatar: {type: String, required: true},
     createdAt: {type: Date, default: Date.now()},
     resetPasswordToken: String,
     resetPasswordTime: Date

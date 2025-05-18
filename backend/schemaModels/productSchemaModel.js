@@ -5,8 +5,8 @@ const productSchema = mongoose.Schema({
     description: {type: String, required: [true, "Inter your product description!"]},
     category: {type: String, required: [true, "Inter your product category!"]},
     tags: {type: String},
-    originalPrice: {type: String, required: [true, "Inter your product price"]},
-    discountPrice: {type: String, required: [true, "Inter your discount price"]},
+    originalPrice: {type: Number, required: [true, "Inter your product price"]},
+    discountPrice: {type: Number, required: [true, "Inter your discount price"]},
     stock: {type: Number, required: [true, "Inter your product stock"]},
     images: [
         {
@@ -30,7 +30,7 @@ const productSchema = mongoose.Schema({
     ratings: {type: Number}, 
     shopId: {type: String, required: [true, "Inter your shop id"]},
     shop: {type: Object, required: true},
-    soldOut: {type: String, default: 0},
+    soldOut: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now()}
 }, {versitionKey: false});
 

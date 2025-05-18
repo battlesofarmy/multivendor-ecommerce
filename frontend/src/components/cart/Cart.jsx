@@ -8,43 +8,22 @@ import { toast } from "react-toastify";
 import useCartStore from "../../store/cartStore";
 
 const Cart = ({ setOpenCart }) => {
-  const [cart, setCart] = useState();
-  //   { 
-  //     _id: "1",
-  //     name: "Demo Product munasir",
-  //     qty: 1,
-  //     discountPrice: 100,
-  //     stock: 5,
-  //     images: [{ url: "https://via.placeholder.com/130" }],
-  //   },
-  // ]);
-  const cartData = useCartStore((state)=> state.cart);
-
-  useEffect(()=>{
-    setCart(cartData);
-  },[])
+  const cart = useCartStore((state)=> state.cart);
+  const removedFromCart = useCartStore((state)=> state.removedFromCart);
 
   const removeFromCartHandler = (data) => {
-    const filteredCart = cart?.filter((item) => item._id !== data._id);
-    setCart(filteredCart);
-  };
-
-  const quantityChangeHandler = (data) => {
-    const updatedCart = cart?.map((item) =>
-      item._id === data._id ? { ...item, qty: data.qty } : item
-    );
-    setCart(updatedCart);
+    removedFromCart(data);
+    console.log(data, " johfu")
   };
 
   const totalPrice = cart?.reduce(
-    (acc, item) => acc + item.count * item.discountPrice,
-    0
-  );
+    (acc, item) => acc + (item.count?  item.count : 1)  * item.originalPrice, 0);
+    // (acc, item) => acc + item.originalPrice, 0);
 
   return (
     <div className="fixed top-0 left-0 w-full bg-[#0000004b] h-screen z-10">
       <div className="fixed top-0 right-0 h-full w-[80%] 800px:w-[25%] bg-white flex flex-col overflow-y-scroll justify-between shadow-sm">
-        {cart.length === 0 ? (
+        {cart?.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
               <RxCross1
@@ -69,17 +48,16 @@ const Cart = ({ setOpenCart }) => {
               <div className={`${styles.noramlFlex} p-4`}>
                 <IoBagHandleOutline size={25} />
                 <h5 className="pl-2 text-[20px] font-[500]">
-                  {cart.length} items
+                  {cart?.length} items
                 </h5>
               </div>
 
               <br />
               <div className="w-full border-t">
-                {cart.map((i, index) => (
+                {cart?.map((i, index) => (
                   <CartSingle
                     key={index}
                     data={i}
-                    quantityChangeHandler={quantityChangeHandler}
                     removeFromCartHandler={removeFromCartHandler}
                   />
                 ))}
@@ -105,23 +83,27 @@ const Cart = ({ setOpenCart }) => {
 };
 
 const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
-  const [value, setValue] = useState(data.qty);
-  const totalPrice = data.discountPrice * value;
+  const [value, setValue] = useState(data.count || 1);
+  const totalPrice = data.originalPrice * value;
+  const increaseCartCount = useCartStore((state)=> state.increaseCartCount);
+  const decreaseCartCount = useCartStore((state)=> state.decreaseCartCount);
+
 
   const increment = (data) => {
     if (data.stock < value + 1) {
       toast.error("Product stock limited!");
     } else {
-      const newQty = value + 1;
+      const newQty = value === 1 ? 1 : value + 1;
       setValue(newQty);
-      quantityChangeHandler({ ...data, qty: newQty });
+      increaseCartCount(data);
     }
   };
 
   const decrement = (data) => {
     const newQty = value === 1 ? 1 : value - 1;
     setValue(newQty);
-    quantityChangeHandler({ ...data, qty: newQty });
+    decreaseCartCount(data);
+
   };
 
   return (
