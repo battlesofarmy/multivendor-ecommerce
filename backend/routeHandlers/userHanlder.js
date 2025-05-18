@@ -19,7 +19,29 @@ router.post('/', async(req, res)=>{
             res.status(500).send(err.message);
         } 
     }
-    
+})
+
+router.post('/create-shop', async(req, res)=>{
+    const {uid, shopData} = req.body;
+    console.log(uid, shopData);
+
+    try{
+        console.log("HI")
+        const result = await User.findOneAndUpdate(
+        { uid },{
+            $set: {
+               shop: shopData, // results is the array field in your User model
+            },
+            $set:{
+                role: "seller"
+            }
+        },
+        { new: true } // to return the updated document
+        );
+        res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    }
 })
 
 
@@ -28,6 +50,16 @@ router.get('/:uid', async(req, res)=>{
         const {uid} = req.params;
         const result = await User.findOne({uid});
         res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+})
+router.get('/role/:uid', async(req, res)=>{
+    // console.log(req.params.uid)
+    const { uid } = req.params;
+    try{
+        const result = await User.findOne({uid});
+        res.status(200).send(result.role);
     }catch(err){
         res.status(500).send(err.message);
     }

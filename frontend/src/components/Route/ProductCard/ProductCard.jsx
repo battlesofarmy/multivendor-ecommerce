@@ -22,7 +22,6 @@ const ProductCard = ({ data, isEvent }) => {
   const cart = useCartStore((state)=> state.cart);
    const addToCart = useCartStore((state) => state.addToCart);
 
-console.log(data)
 
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.wishlist);

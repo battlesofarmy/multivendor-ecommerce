@@ -19,6 +19,7 @@ import { RxCross1 } from "react-icons/rx";
 import { observeAuthState } from "../../redux/actions/authAction";
 import Loader from "./Loader";
 import { fetchUserData } from "../../redux/actions/user";
+import api from "../../utils/axiosCongif";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -35,13 +36,19 @@ const Header = ({ activeHeading }) => {
   const [open, setOpen] = useState(false);
 
   const { user } = useSelector((state)=> state.auth);
+  const [role, setRole] = useState("user");
 
     // const dispatch = useDispatch();
 
-    // useEffect(() => {
-      // console.log(user, " fahims user")
-      // console.log(userData, " users data")
-    // }, []);
+    useEffect(() => {
+      if(!user) return;
+
+      api.get(`/user/role/${user.uid}`)
+      .then((res)=>{
+        setRole(res.data);
+        console.log(res.data);
+      })
+    }, [user]);
 
   const handleSearchChange = (e) => {
     
@@ -114,9 +121,9 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className={`${styles.button}`}>
-            <Link to={`${(userData?.role === "seller" && user) ? "/dashboard" : "/shop-create"}`}>
+            <Link to={`${(role === "seller" && user) ? "/dashboard" : "/shop-create"}`}>
               <h1 className="text-[#fff] flex items-center">
-                {(userData?.role === "seller" && user) ? "Go Dashboard" : "Become Seller"}{" "}
+                {(role === "seller" && user) ? "Go Dashboard" : "Become Seller"}{" "}
                 <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>

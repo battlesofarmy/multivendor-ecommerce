@@ -13,6 +13,14 @@ const userSchema = mongoose.Schema({
         zipCode: {type: Number},
         addressType: {type: String}
     }],
+    shop:{
+        name: {type: String},
+        email: {type: String},
+        address: {type: String},
+        avatar: {type: String},
+        phone: {type: Number},
+        zipCode: {type: Number},
+    },
     role: {type: String, default: "user"},
     avatar: {type: String, required: true},
     createdAt: {type: Date, default: Date.now()},

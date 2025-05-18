@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from '../../redux/actions/authAction'
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../utils/axiosCongif";
+import { getAuth } from "firebase/auth";
 
 const Singup = () => {
   const { user } = useSelector((state)=> state.auth);
@@ -42,21 +43,30 @@ const Singup = () => {
         // registerUser({ email, password, displayName: name, photoURL, phoneNumber })
         registerUser({ email, password })
       ).unwrap();
+      const auth = getAuth();
+      const currentUser = auth.currentUser;
+
+      if (!currentUser) {
+        alert("User not available in auth");
+        return;
+      }
+
        const newUser =   {
-          "uid": user?.uid,
+          "uid": currentUser?.uid,
           "name": name,
-          "email": user?.email,
+          "email": currentUser?.email,
           "phoneNumber": phoneNumber,
           "avatar": "https://avatars.githubusercontent.com/u/155252694?v=4",
           "address": [],
           "role": "user",
         }
+
       await api.post('/user', newUser)
       .then((res)=>{
         setSuccessMessage("Registration Successful");
       })
       .catch((err)=>{
-         setErrorMessage(err.message || "Registration Fail");
+         setErrorMessage(err.message || "User creation Fail");
       })
 
       // setTimeout(() => {
