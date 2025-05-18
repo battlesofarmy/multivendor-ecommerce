@@ -12,22 +12,24 @@ import { toast } from "react-toastify";
 import Ratings from "../../Products/Ratings";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlistThunk, removeFromWishlistThunk } from "../../../redux/actions/wishlist";
-
+import useCartStore from "../../../store/cartStore";
+import api from "../../../utils/axiosCongif";
+ 
 const ProductCard = ({ data, isEvent }) => {
   const [click, setClick] = useState(false);
   const [open, setOpen] = useState(false);
+  const fetchCartFromAPI = useCartStore((state) => state.fetchCartFromAPI);
+  const cart = useCartStore((state)=> state.cart);
+   const addToCart = useCartStore((state) => state.addToCart);
+
+
+  console.log(cart, 'zustand cart');
 
   const dispatch = useDispatch();
   const wishlist = useSelector((state) => state.wishlist.wishlist);
+  const { user } = useSelector((state)=> state.auth);
 
 
-  // const wishlist = [
-  //   { _id: "prod-002", name: "Wireless Headphones", image: "https://via.placeholder.com/300", ratings: 4.5, originalPrice: 150, discountPrice: 100, sold_out: 120, stock: 80, shop: { name: "Tech Store", _id: "shop-001" } }
-  // ];
-  
-  const cart = [
-    { _id: "prod-003", name: "Laptop X1", image: "https://via.placeholder.com/300", ratings: 4.8, originalPrice: 1200, discountPrice: 900, sold_out: 200, stock: 50, shop: { name: "Tech Hub", _id: "shop-002" } }
-  ];
 
   useEffect(() => {
     if (wishlist && wishlist.find((i) => i._id === data._id)) {
@@ -35,7 +37,9 @@ const ProductCard = ({ data, isEvent }) => {
     } else {
       setClick(false);
     }
-  }, [wishlist]);
+    fetchCartFromAPI()
+
+  }, [wishlist, fetchCartFromAPI]);
 
   const removeFromWishlistHandler = (data) => {
     dispatch(removeFromWishlistThunk(data._id))
@@ -58,20 +62,24 @@ const ProductCard = ({ data, isEvent }) => {
     setClick(!click);
   };
 
-  const addToCartHandler = (id) => {
-    const isItemExists = cart && cart.find((i) => i._id === id);
-    // dispatch()
+  const addToCartHandler = async(data) => {
+    if(!user){
+      toast.error("Login to add a product to cart");
+      return;
+    }
 
-    // if (isItemExists) {
-    //   toast.error("Item already in cart!");
-    // } else {
       if (data.stock < 1) {
         toast.error("Product stock limited!");
       } else {
-        const cartData = { ...data, qty: 1 };
-        toast.success("Item added to cart successfully!", cartData);
+          const {_id, ...cardData} = data;
+          cardData.email = user?.email;
+          cardData.productId = data._id;
+
+          await api.post('/cart', cardData)
+          .then((res)=>toast.success("Item added to cart successfully!"))
+          .catch((err)=> toast.error(err.message));
+          addToCart(data);
       }
-    // }
   };
 
   return (
@@ -141,7 +149,7 @@ const ProductCard = ({ data, isEvent }) => {
           <AiOutlineShoppingCart
             size={25}
             className="cursor-pointer absolute right-2 top-24"
-            onClick={() => addToCartHandler(data._id)}
+            onClick={() => addToCartHandler(data)}
             color="#444"
             title="Add to cart"
           />

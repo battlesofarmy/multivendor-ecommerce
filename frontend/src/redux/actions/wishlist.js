@@ -7,9 +7,9 @@ export const addToWishlistThunk = (data) => async (dispatch, getState) => {
   localStorage.setItem(
     "wishlist",
     JSON.stringify(getState().wishlist.wishlist)
-  );
+  ); 
   return data;
-};
+}; 
 
 // Remove from wishlist
 export const removeFromWishlistThunk = (_id) => async (dispatch, getState) => {

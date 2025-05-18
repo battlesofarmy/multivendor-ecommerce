@@ -70,11 +70,12 @@ export const registerUser = createAsyncThunk(
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+      return user;
 
-      await updateProfile(user, {
-        displayName,
-        photoURL,
-      });
+      // await updateProfile(user, {
+      //   displayName,
+      //   photoURL,
+      // });
 
       // // Immediately store custom fields in Firestore
       // await setDoc(doc(db, "users", user.uid), {
@@ -86,28 +87,28 @@ export const registerUser = createAsyncThunk(
       // });
 
 
-      const userData = {
-        email: email ?? "",
-        displayName: displayName ?? "",
-        photoURL: photoURL ?? "",
-        phoneNumber: phoneNumber ?? "",
-        role: "user",
-      };
+      // const userData = {
+      //   email: email ?? "",
+      //   displayName: displayName ?? "",
+      //   photoURL: photoURL ?? "",
+      //   phoneNumber: phoneNumber ?? "",
+      //   role: "user",
+      // };
       
       
-      console.log("📤 Sending to Firestore:", userData);
+      // console.log("📤 Sending to Firestore:", userData);
       
-      await setDoc(doc(db, "users", user.uid), userData);
+      // await setDoc(doc(db, "users", user.uid), userData);
       
 
-      return {
-        uid: user.uid,
-        email,
-        displayName,
-        photoURL,
-        phoneNumber,
-        role: "user" // 🔥 fixed
-      };
+      // return {
+      //   uid: user.uid,
+      //   email,
+      //   displayName,
+      //   photoURL,
+      //   phoneNumber,
+      //   role: "user" // 🔥 fixed
+      // };
     } catch (error) {
       return rejectWithValue(error.message);
     }

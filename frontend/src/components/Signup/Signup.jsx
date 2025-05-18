@@ -4,6 +4,7 @@ import styles from "../../styles/styles";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from '../../redux/actions/authAction'
 import { useDispatch, useSelector } from "react-redux";
+import api from "../../utils/axiosCongif";
 
 const Singup = () => {
   const { user } = useSelector((state)=> state.auth);
@@ -11,14 +12,15 @@ const Singup = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("")
 
-   const newUser = {
-    "uid" : "InQvT0PFhocAW9zUeMtZGjtgrAZ2",
-    "name" : "Muntasir Ahmed",
-    "email": "maf107714@gmail.com",
-    "profileImage" : "https://scontent.fjsr8-1.fna.fbcdn.net/v/t39.30808-6/394505936_1576807036186512_5237267306121855677_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFntHUygYjTdrQN8hb42n0b1QAv9Th7_N3VAC_1OHv83TdjhTNNBaW7JNOlklaCWw6S5SwniPIGMZuSpSJP4M7z&_nc_ohc=OAqoqm9RxA4Q7kNvwHrbovP&_nc_oc=AdmS_Yr4KmzQZetIFq7Tv9sguWEF7eivO7rn8509S8PCh48BAxLvCWnA8YJFDJ--b5k&_nc_zt=23&_nc_ht=scontent.fjsr8-1.fna&_nc_gid=D3e-bjT8kPMavbHzxU97_A&oh=00_AfJp8l4qFNIUStib9hh7u2vq7-fmCbMKd08u9lGQY7b0mQ&oe=6829A71A",
-    "role" : "user",
-   }
+  //  const newUser = { 
+  //   "uid" : "InQvT0PFhocAW9zUeMtZGjtgrAZ2",
+  //   "name" : "Muntasir Ahmed",
+  //   "email": "maf107714@gmail.com",
+  //   "profileImage" : "https://scontent.fjsr8-1.fna.fbcdn.net/v/t39.30808-6/394505936_1576807036186512_5237267306121855677_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeFntHUygYjTdrQN8hb42n0b1QAv9Th7_N3VAC_1OHv83TdjhTNNBaW7JNOlklaCWw6S5SwniPIGMZuSpSJP4M7z&_nc_ohc=OAqoqm9RxA4Q7kNvwHrbovP&_nc_oc=AdmS_Yr4KmzQZetIFq7Tv9sguWEF7eivO7rn8509S8PCh48BAxLvCWnA8YJFDJ--b5k&_nc_zt=23&_nc_ht=scontent.fjsr8-1.fna&_nc_gid=D3e-bjT8kPMavbHzxU97_A&oh=00_AfJp8l4qFNIUStib9hh7u2vq7-fmCbMKd08u9lGQY7b0mQ&oe=6829A71A",
+  //   "role" : "user",
+  //  }
 
+ 
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,12 +43,35 @@ const Singup = () => {
         registerUser({ email, password })
       ).unwrap();
       setSuccessMessage("Registration Successful");
+       const newUser =   {
+    "avatar": {
+      "publicId": "avatar123",
+      "url": "https://example.com/uploads/avatar123.jpg"
+    },
+    "uid": user?.uid,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "phoneNumber": 1234567890,
+    "address": [
+      {
+        "country": "USA",
+        "city": "New York",
+        "address1": "123 5th Avenue",
+        "address2": "Apt 4B",
+        "zipCode": 10001,
+        "addressType": "Home",
+      }
+    ],
+    "role": "seller",
+  }
+      await api.post('/user', newUser);
 
-      setTimeout(() => {
-          navigate('/profile')
-      }, 1500);
+      
+      // setTimeout(() => {
+      //     navigate('/profile')
+      // }, 1500);
     } catch (err) {
-      setErrorMessage(err);
+      setErrorMessage(err.message || "Registration Fail");
     }
   };
   
@@ -137,7 +162,6 @@ const Singup = () => {
               <div className="mt-1 relative">
                 <input
                   name="number"
-                  required
                   type="number"
                   className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />

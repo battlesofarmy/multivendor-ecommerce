@@ -1,37 +1,43 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 import styles from "../../styles/styles";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import useCartStore from "../../store/cartStore";
 
 const Cart = ({ setOpenCart }) => {
-  const [cart, setCart] = useState([
-    { 
-      _id: "1",
-      name: "Demo Product munasir",
-      qty: 1,
-      discountPrice: 100,
-      stock: 5,
-      images: [{ url: "https://via.placeholder.com/130" }],
-    },
-  ]);
+  const [cart, setCart] = useState();
+  //   { 
+  //     _id: "1",
+  //     name: "Demo Product munasir",
+  //     qty: 1,
+  //     discountPrice: 100,
+  //     stock: 5,
+  //     images: [{ url: "https://via.placeholder.com/130" }],
+  //   },
+  // ]);
+  const cartData = useCartStore((state)=> state.cart);
+
+  useEffect(()=>{
+    setCart(cartData);
+  },[])
 
   const removeFromCartHandler = (data) => {
-    const filteredCart = cart.filter((item) => item._id !== data._id);
+    const filteredCart = cart?.filter((item) => item._id !== data._id);
     setCart(filteredCart);
   };
 
   const quantityChangeHandler = (data) => {
-    const updatedCart = cart.map((item) =>
+    const updatedCart = cart?.map((item) =>
       item._id === data._id ? { ...item, qty: data.qty } : item
     );
     setCart(updatedCart);
   };
 
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.qty * item.discountPrice,
+  const totalPrice = cart?.reduce(
+    (acc, item) => acc + item.count * item.discountPrice,
     0
   );
 

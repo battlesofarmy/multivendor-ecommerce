@@ -63,6 +63,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useDispatch, useSelector } from "react-redux";
 import { observeAuthState } from "./redux/actions/authAction.js";
 import { fetchUserData } from "./redux/actions/user.js";
+// import { addToCartThunk } from "./redux/actions/cartAction.js";
 
 
 const App = () => {
@@ -86,9 +87,10 @@ const App = () => {
   // console.log(user, " user")
   
   useEffect(()=>{
-    // dispatch(fetchUserData(user?.uid)); // ✅ Dispatching thunk
-    dispatch(fetchUserData()); // ✅ Dispatching thunk
+    dispatch(fetchUserData(user?.uid)); // ✅ Dispatching thunk
+    // dispatch(fetchUserData()); // ✅ Dispatching thunk
     dispatch(observeAuthState());
+    //  dispatch(addToCartThunk());
   },[])
 
 

@@ -5,12 +5,12 @@ const router = express.Router();
 
 router.post('/', async(req, res)=>{
     const { productId, email } = req.body;
-    // console.log(req.body)
     const exists = await Cart.findOne({productId, email});
 
     if(exists){ 
-        console.log("Already here");
-        res.send("already here")
+        exists.count++;
+        await exists.save();
+        res.send(exists);
     }else{
         try{
             const result = await Cart(req.body).save();

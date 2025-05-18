@@ -14,6 +14,7 @@ const ProductsPage = () => {
   const location = useLocation();
 
   const [products, setProducts] = useState([]);
+  
   useEffect(()=>{
     api.get(`/products${location.search}`)
     .then(res=> setProducts(res.data))

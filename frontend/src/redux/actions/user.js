@@ -4,8 +4,8 @@ import { setUserData } from "../reducers/user";
 // Thunk to fetch user data
 export const fetchUserData = (uid) => async (dispatch) => {
   try {
-    const { data } = await api.get("/user/8KaswUbotMZjtZeXvuLBi5B3sc72");
-    // const { data } = await api.get(`/user/${uid}`);
+    // const { data } = await api.get("/user/ecjRu5WtjCNLgzlOUdY4RwCassq1");
+    const { data } = await api.get(`/user/${uid}`);
     dispatch(setUserData(data));
     return data;
   } catch (error) {

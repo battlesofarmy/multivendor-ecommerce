@@ -39,8 +39,8 @@ const Header = ({ activeHeading }) => {
     // const dispatch = useDispatch();
 
     // useEffect(() => {
-      console.log(user, " fahims user")
-      console.log(userData, " users data")
+      // console.log(user, " fahims user")
+      // console.log(userData, " users data")
     // }, []);
 
   const handleSearchChange = (e) => {
@@ -114,9 +114,9 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className={`${styles.button}`}>
-            <Link to={`${(userData?.role === "user" && user) ? "/dashboard" : "/shop-create"}`}>
+            <Link to={`${(userData?.role === "seller" && user) ? "/dashboard" : "/shop-create"}`}>
               <h1 className="text-[#fff] flex items-center">
-                {(userData?.role === "user" && user) ? "Go Dashboard" : "Become Seller"}{" "}
+                {(userData?.role === "seller" && user) ? "Go Dashboard" : "Become Seller"}{" "}
                 <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
