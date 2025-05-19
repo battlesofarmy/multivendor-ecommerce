@@ -5,6 +5,6 @@ const api = axios.create({
     // baseURL: "https://multivendor-backend-henna.vercel.app",
     timeout: 10000,
     headers: {"Content-Type": "application/json"}
-});
+});   
 
 export default api;

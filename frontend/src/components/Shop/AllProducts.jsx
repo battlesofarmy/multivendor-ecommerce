@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import api from "../../utils/axiosCongif";
@@ -8,12 +8,16 @@ import AddNew from "./componenets/AddNew";
 
 const AllProducts = () => {
   const [products, setProducts] = useState(null);
-  api.get('/products')
-  .then((res)=>{
-    console.log(res.data);
-    setProducts(res.data)
-  })
-  .catch((err)=> console.log(err))
+  
+
+  useEffect(()=>{
+    api.get('/products')
+    .then((res)=>{
+      console.log(res.data);
+      setProducts(res.data)
+    })
+    .catch((err)=> console.log(err))
+  },[])
 
   const handleDelete = (id) => {
     const filtered = products?.filter((item) => item._id !== id);
