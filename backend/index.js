@@ -6,10 +6,11 @@ const app = express();
 const cors = require("cors");
 
 app.use(express.json());
-app.use(cors({
-  origin:[ 'http://localhost:3000', 'https://multivendor-frontend-lyart.vercel.app'],
-  credentials: true
-}));
+// app.use(cors({
+//   origin:[ 'http://localhost:3000', 'https://multivendor-frontend-lyart.vercel.app'],
+//   credentials: true
+// }));
+app.use(cors());
 
 mongoose.connect(process.env.DB_URL)
 .then(()=> console.log("MongoDb Conneted Successfully"))
