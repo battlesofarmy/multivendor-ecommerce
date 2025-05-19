@@ -23,7 +23,8 @@ router.post('/', async(req, res)=>{
 
 router.post('/create-shop', async(req, res)=>{
     const {uid, shopData} = req.body;
-    console.log(uid, shopData);
+    // console.log(uid, shopData);
+    // console.log()
 
     try{
         console.log("HI")
@@ -31,10 +32,10 @@ router.post('/create-shop', async(req, res)=>{
         { uid },{
             $set: {
                shop: shopData, // results is the array field in your User model
+               role: "seller"
             },
-            $set:{
-                role: "seller"
-            }
+            // $set:{
+            // }
         },
         { new: true } // to return the updated document
         );

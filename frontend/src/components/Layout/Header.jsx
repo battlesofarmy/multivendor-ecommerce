@@ -20,6 +20,7 @@ import { observeAuthState } from "../../redux/actions/authAction";
 import Loader from "./Loader";
 import { fetchUserData } from "../../redux/actions/user";
 import api from "../../utils/axiosCongif";
+import useCartStore from "../../store/cartStore";
 
 const Header = ({ activeHeading }) => {
   const { isAuthenticated } = useSelector((state) => state.user);
@@ -37,17 +38,22 @@ const Header = ({ activeHeading }) => {
 
   const { user } = useSelector((state)=> state.auth);
   const [role, setRole] = useState("user");
+  const cart = useCartStore((state)=> state.cart);
 
     // const dispatch = useDispatch();
 
     useEffect(() => {
+      console.log(user);
+
       if(!user) return;
 
-      api.get(`/user/role/${user.uid}`)
-      .then((res)=>{
-        setRole(res.data);
-        console.log(res.data);
-      })
+      if(user?.uid){
+        api.get(`/user/role/${user?.uid}`)
+        .then((res)=>{
+          setRole(res.data);
+          console.log(res.data);
+        })
+      }
     }, [user]);
 
   const handleSearchChange = (e) => {
@@ -188,7 +194,7 @@ const Header = ({ activeHeading }) => {
                   color="rgb(255 255 255 / 83%)"
                 />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
-                  {/* {cart && cart.length} */}
+                  {cart && cart.length}
                 </span>
               </div>
             </div>
@@ -253,7 +259,7 @@ const Header = ({ activeHeading }) => {
             >
               <AiOutlineShoppingCart size={30} />
               <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
-                {/* {cart && cart.length} */}999
+                {cart && cart.length}
               </span>
             </div>
           </div>

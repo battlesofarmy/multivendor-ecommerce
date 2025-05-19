@@ -1,4 +1,4 @@
-require("dotenv").config();
+require("dotenv").config(); 
 const mongoose = require('mongoose');
 const port = process.env.PORT || 5000;
 const express = require("express");
@@ -21,10 +21,99 @@ mongoose.connect(process.env.DB_URL)
 const productHandler = require('./routeHandlers/productHandler');
 const userHandler = require('./routeHandlers/userHanlder');
 const cartHandler = require('./routeHandlers/cartHandler');
+
 app.use('/products', productHandler);
 app.use('/user', userHandler);
 app.use('/cart', cartHandler);
 
+const Product = require('./schemaModels/productSchemaModel');
+
+
+
+
+const fs = require("fs");
+const path = require("path");
+
+
+// Allow frontend connection
+app.use(cors());
+app.use(express.json());
+
+// Set up Multer to temporarily store uploaded files
+// const upload = multer({ dest: "server/uploads/" });
+
+// // Handle product upload
+// app.post("/products/upload", upload.array("images", 2), async (req, res) => {
+//   try {
+//     const imageDir = path.join(__dirname, "../client/src/images");
+//     if (!fs.existsSync(imageDir)) {
+//       fs.mkdirSync(imageDir, { recursive: true });
+//     }
+
+//     const imageUrls = [];
+
+//     req.files.forEach((file, index) => {
+//       const ext = path.extname(file.originalname);
+//       const newFileName = `product-${Date.now()}-${index}${ext}`;
+//       const destPath = path.join(imageDir, newFileName);
+//       fs.renameSync(file.path, destPath);
+//       imageUrls.push({ url: `/images/${newFileName}` });
+//     });
+
+//     req.body.images = imageUrls;
+//     req.body.originalPrice = Number(req.body.originalPrice);
+//     req.body.discountPrice = Number(req.body.discountPrice);
+//     req.body.stock = Number(req.body.stock);
+//     req.body.ratings = Number(req.body.ratings);
+//     req.body.createdAt = new Date();
+//     req.body.soldOut = 0;
+
+//     const result = await Product(req.body).save();
+//     res.status(200).send(result);
+//   } catch (err) {
+//     res.status(500).send(err.message);
+//   }
+// });
+
+const multer = require('multer')
+const {put} = require('@vercel/blob')
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+
+app.post("/products/upload", upload.array("images", 2), async (req, res) => {
+  try {
+    const uploadedImages = [];
+
+    for (const file of req.files) {
+      const blob = await put(`product-${Date.now()}-${file.originalname}`, file.buffer, {
+        access: "public",
+        token: "vercel_blob_rw_Qs8TU1vnT8DcWHAc_zdpU9ws5lQqgXajAH1DdxzZy7nff34", // Replace with your actual token
+        contentType: file.mimetype,
+        contentLength: file.size,
+      });
+
+      uploadedImages.push({ url: blob.url });
+    }
+
+    req.body.images = uploadedImages;
+    req.body.originalPrice = Number(req.body.originalPrice);
+    req.body.discountPrice = Number(req.body.discountPrice);
+    req.body.stock = Number(req.body.stock);
+    req.body.ratings = Number(req.body.ratings);
+    req.body.createdAt = new Date();
+    req.body.soldOut = 0;
+    req.body.shop = {
+      "name" : "muntasir"
+    }
+
+    const result = await Product(req.body).save();
+    res.status(200).send(result);
+  } catch (err) {
+    console.error("Upload Error:", err.message);
+    res.status(500).json({ error: "Failed to upload product" });
+  }
+});
 
 
 

@@ -46,7 +46,7 @@ const ProductsPage = () => {
     // isLoading ? (
     //   <Loader />
     // ) : (
-      <div>
+    <div>
       <Header activeHeading={3} />
       <br />
       <br />

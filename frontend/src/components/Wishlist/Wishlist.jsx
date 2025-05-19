@@ -5,17 +5,20 @@ import styles from "../../styles/styles";
 import { AiOutlineHeart } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromWishlistThunk } from "../../redux/actions/wishlist";
+import useCartStore from "../../store/cartStore";
 
 const Wishlist = ({ setOpenWishlist }) => {
   const { wishlist } = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
+  const addToCart = useCartStore((state)=> state.addToCart);
 
   const removeFromWishlistHandler = (data) => {
     dispatch(removeFromWishlistThunk(data._id))
   };
-
-  const addToCartHandler = (data) => {
   
+  const addToCartHandler = (data) => {
+    addToCart(data);
+    dispatch(removeFromWishlistThunk(data._id))
   }
 
   return (

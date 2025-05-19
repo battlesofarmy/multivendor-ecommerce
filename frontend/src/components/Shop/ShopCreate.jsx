@@ -29,7 +29,7 @@ const ShopCreate = () => {
       }
       console.log(shopData)
 
-      api.post("/user/create-shop", {uid: user?.uid, shopData})
+      await api.post("/user/create-shop", {uid: user?.uid, shopData})
       .then((res) => {
         toast.success(res.data.message);
       })

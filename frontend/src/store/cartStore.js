@@ -19,7 +19,6 @@ const useCartStore = create((set) => ({
       cart: [...state.cart, item],
     })),
 
-
     removedFromCart: async (data) => {
       try {
         await api.delete("/cart", {data});

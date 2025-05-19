@@ -2,7 +2,6 @@ const Product = require('../schemaModels/productSchemaModel');
 const express = require('express');
 const router = express.Router();
 
-
 router.get('/', async(req, res)=>{
     try{
         const { category } = req.query;
@@ -16,7 +15,6 @@ router.get('/', async(req, res)=>{
     }
 })
 
-
 // Search a single products
 router.get('/:id', async(req, res)=>{
     // console.log(req.params.id)
@@ -28,6 +26,16 @@ router.get('/:id', async(req, res)=>{
     }
 })
 
+
+router.post('/', async(req, res)=>{
+    // console.log(req.params.id)
+    try{
+        const result = await Product(req.body).save();
+        res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    } 
+})
 
 
 
