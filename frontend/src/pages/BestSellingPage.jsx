@@ -11,7 +11,7 @@ const BestSellingPage = () => {
   const [bestSellingProducts, setBestSellingProducts] = useState([]);
   
   useEffect(()=>{
-     api.get("/products//best-selling")
+     api.get("/products/best-selling")
      .then((res)=> setBestSellingProducts(res.data))
      .catch((err)=> console.log(err))
   },[])
