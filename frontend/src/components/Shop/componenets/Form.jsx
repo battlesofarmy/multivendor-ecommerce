@@ -54,15 +54,15 @@ const ProductUploadForm = ({ shopId }) => {
     Object.entries(form).forEach(([key, val]) => formData.append(key, val));
     
     const shopData =  {
-      "name": "johfa tahsin",
+      "name": shopName,
       "shopId": shopId,
       "avatar": {
         "url": shopAvatar
       },
       "description": "Best Shop in the world"
     }   
-    // formData.append("shop",shopData);
     formData.append("shop", JSON.stringify(shopData)); 
+    // formData.append("shop", shopData); 
     images.forEach((img) => formData.append("images", img));
     
     console.log(shopData); 

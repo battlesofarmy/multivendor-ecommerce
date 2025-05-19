@@ -108,8 +108,11 @@ app.post("/products/upload", upload.array("images", 2), async (req, res) => {
     //   "shopId" : req.body.shop.shopId,
     //   "description": req.body.shop.description,
     //   "avatar": req.body.shop.avatar,
-    // } 
-    console.log(req.body)
+    // }
+    if (req.body.shop) {
+        req.body.shop = JSON.parse(req.body.shop);
+    }
+    console.log(req.body) 
  
     const result = await Product(req.body).save();
     res.status(200).send(result);
