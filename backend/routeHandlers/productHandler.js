@@ -15,6 +15,16 @@ router.get('/', async(req, res)=>{
     }
 })
 
+
+router.get('/best-selling', async(req, res)=>{
+    try{
+        const result = await Product.find({ stock: { $lt: 25 } });
+        res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+})
+
 // Search a single products
 router.get('/:id', async(req, res)=>{
     // console.log(req.params.id)
