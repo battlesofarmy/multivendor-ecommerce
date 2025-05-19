@@ -25,6 +25,16 @@ router.get('/best-selling', async(req, res)=>{
     }
 })
 
+router.get("/search", async (req, res) => {
+  const { q } = req.query;
+  if (!q) return res.json([]);
+
+  const regex = new RegExp(q, "i"); // case-insensitive
+  const products = await Product.find({ name: regex }).limit(10); // or also search by category, etc.
+  res.json(products);
+});
+
+
 // Search a single products
 router.get('/:id', async(req, res)=>{
     // console.log(req.params.id)

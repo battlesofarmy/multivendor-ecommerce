@@ -56,7 +56,26 @@ const Header = ({ activeHeading }) => {
       }
     }, [user]);
 
-  const handleSearchChange = (e) => {
+
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (query.trim()) {
+        api.get(`/products/search?q=${query}`)
+          .then(res => setResults(res.data))
+          .catch(err => console.log(err));
+      } else {
+        setResults([]);
+      }
+    }, 300); // debounce input by 300ms
+
+    return () => clearTimeout(delayDebounce);
+  }, [query]);
+
+
+    const handleSearchChange = (e) => {
     
     const term = e.target.value;
     setSearchTerm(term);
@@ -68,7 +87,6 @@ const Header = ({ activeHeading }) => {
       );
     setSearchData(filteredProducts);
   };
-
   
 
   window.addEventListener("scroll", () => {
@@ -97,8 +115,8 @@ const Header = ({ activeHeading }) => {
             <input
               type="text"
               placeholder="Search Product..."
-              value={searchTerm}
-              onChange={handleSearchChange}
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
             />
             <AiOutlineSearch
@@ -125,6 +143,14 @@ const Header = ({ activeHeading }) => {
               </div>
             ) : null}
           </div>
+
+
+          <ul className="mt-2">
+        {results.map(product => (
+          <li key={product._id}>{product.name}</li>
+        ))}
+      </ul>
+      
 
           <div className={`${styles.button}`}>
             <Link to={`${(role === "seller" && user) ? "/dashboard" : "/shop-create"}`}>
