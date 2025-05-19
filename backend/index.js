@@ -103,10 +103,14 @@ app.post("/products/upload", upload.array("images", 2), async (req, res) => {
     req.body.ratings = Number(req.body.ratings);
     req.body.createdAt = new Date();
     req.body.soldOut = 0;
-    req.body.shop = {
-      "name" : "muntasir"
-    }
-
+    // req.body.shop = {
+    //   "name" : req.body.shop.name,
+    //   "shopId" : req.body.shop.shopId,
+    //   "description": req.body.shop.description,
+    //   "avatar": req.body.shop.avatar,
+    // } 
+    console.log(req.body)
+ 
     const result = await Product(req.body).save();
     res.status(200).send(result);
   } catch (err) {

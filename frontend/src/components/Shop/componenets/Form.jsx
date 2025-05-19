@@ -6,17 +6,18 @@ import { toast } from "react-toastify";
 
 
 const ProductUploadForm = ({ shopId }) => {
-  const [user, setUser] = useState([]);
+  const [shopName, setShopName] = useState([]);
+  const [shopAvatar, setShopAvatar] = useState([]);
 
   useEffect(()=>{
      api.get(`/user/${shopId}`)
     .then((res)=> {
-      setUser(res.data)
-      // console.log(res.data.shop.name)
+      setShopName(res.data.shop.name);
+      setShopAvatar(res.data.shop.avatar)
     })
     .catch((err)=> console.log(err));
-    console.log(user.shop.name)
-  },[user])
+
+  },[])
 
   
 
@@ -51,29 +52,27 @@ const ProductUploadForm = ({ shopId }) => {
     setSubmitting(true);
     const formData = new FormData();
     Object.entries(form).forEach(([key, val]) => formData.append(key, val));
-    formData.append("shopId", user?.uid);
     
     const shopData =  {
-      "name": user?.shop?.name,
+      "name": "johfa tahsin",
+      "shopId": shopId,
       "avatar": {
-        "url": user?.avatar?.url
+        "url": shopAvatar
       },
       "description": "Best Shop in the world"
-    }    
-    formData.append("shop",shopData);
+    }   
+    // formData.append("shop",shopData);
+    formData.append("shop", JSON.stringify(shopData)); 
     images.forEach((img) => formData.append("images", img));
-
+    
+    console.log(shopData); 
     try {
       const res = await fetch("http://localhost:5000/products/upload", {
         method: "POST",
         body: formData,
       });
       const data = await res.json();
-      // alert("Product uploaded successfully!");
-      // await api.post("/products/upload", formData)
-      // .then(()=>{
         toast.success("Product Added Successfully");
-      // }) 
       console.log(data);
     } catch (err) {
       console.error(err);

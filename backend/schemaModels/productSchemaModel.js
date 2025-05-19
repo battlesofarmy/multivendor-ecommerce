@@ -28,8 +28,14 @@ const productSchema = mongoose.Schema({
         }
     ],
     ratings: {type: Number}, 
-    shopId: {type: String, required: [true, "Inter your shop id"]},
-    shop: {type: Object, required: true},
+    shop: {
+          shopId: {type: String, required: true},
+          name: {type: String, required: true},
+          avatar: {
+            url: {type: String, required: true}
+          },
+          description: {type: String, required: true}
+        },
     soldOut: {type: Number, default: 0},
     createdAt: {type: Date, default: Date.now()}
 }, {versitionKey: false});
