@@ -417,38 +417,6 @@ const styles = {
   active_indicator: "absolute bottom-[-2px] left-0 w-full h-[2px] bg-blue-500",
 };
 
-// ⭐ Hardcoded product data
-const product = {
-  _id: "123",
-  name: "Wireless Bluetooth Headphones",
-  description:
-    "High-quality sound with comfortable design. Long battery life and premium materials.",
-  originalPrice: 150,
-  discountPrice: 99,
-  stock: 25,
-  ratings: 4.6,
-  images: [
-    { url: "https://avatars.githubusercontent.com/u/155252694?v=4" },
-    { url: "https://avatars.githubusercontent.com/u/155252694?v=4" },
-  ],
-  reviews: [
-    {
-      user: {
-        name: "Alice",
-        avatar: { url: "https://avatars.githubusercontent.com/u/155252694?v=4" },
-      },
-      rating: 5,
-      comment: "Absolutely love these!",
-    },
-  ],
-  shop: {
-    _id: "shop123",
-    name: "TechZone",
-    avatar: { url: "https://avatars.githubusercontent.com/u/155252694?v=4" },
-    description: "Selling high-tech electronics since 2020.",
-    createdAt: "2022-01-01T00:00:00Z",
-  },
-};
 
 const ProductDetails = ({data}) => {
   const [count, setCount] = useState(1);
@@ -461,6 +429,7 @@ const ProductDetails = ({data}) => {
     // const result = wishlist?.map(ele=> console.log(ele._id));
     // if(result) setClick(true);
     // console.log(data._id)
+    console.log(data);
   },[wishlist])
 
   const incrementCount = () => setCount(count + 1);
@@ -552,7 +521,7 @@ const ProductDetails = ({data}) => {
               </div>
 
               <div className="flex items-center pt-8">
-                <Link to={`/shop/preview/${data?.shop._id}`}>
+                <Link to={`/shop/preview/${data?.shop?.shopId}`}>
                   <img
                     src={data?.shop.avatar.url}
                     className="w-[50px] h-[50px] rounded-full mr-2"
