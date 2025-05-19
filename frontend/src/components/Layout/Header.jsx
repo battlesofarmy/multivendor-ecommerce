@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../../styles/styles";
 import { categoriesData } from "../../static/data";
 import {
@@ -56,26 +56,7 @@ const Header = ({ activeHeading }) => {
       }
     }, [user]);
 
-
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-
-  useEffect(() => {
-    const delayDebounce = setTimeout(() => {
-      if (query.trim()) {
-        api.get(`/products/search?q=${query}`)
-          .then(res => setResults(res.data))
-          .catch(err => console.log(err));
-      } else {
-        setResults([]);
-      }
-    }, 300); // debounce input by 300ms
-
-    return () => clearTimeout(delayDebounce);
-  }, [query]);
-
-
-    const handleSearchChange = (e) => {
+  const handleSearchChange = (e) => {
     
     const term = e.target.value;
     setSearchTerm(term);
@@ -87,6 +68,22 @@ const Header = ({ activeHeading }) => {
       );
     setSearchData(filteredProducts);
   };
+  
+
+  const [searchText, setSearchText] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+    if (searchText.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchText.trim())}`);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') handleSearch();
+  };
+
+
   
 
   window.addEventListener("scroll", () => {
@@ -115,14 +112,17 @@ const Header = ({ activeHeading }) => {
             <input
               type="text"
               placeholder="Search Product..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => setSearchText(e.target.value)}
+        onKeyDown={handleKeyPress}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
             />
             <AiOutlineSearch
+               onClick={handleSearch}
               size={30}
               className="absolute right-2 top-1.5 cursor-pointer"
             />
+
+
             {searchData && searchData.length !== 0 ? (
               <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
                 {searchData &&
@@ -143,14 +143,6 @@ const Header = ({ activeHeading }) => {
               </div>
             ) : null}
           </div>
-
-
-          <ul className="mt-2">
-        {results.map(product => (
-          <li key={product._id}>{product.name}</li>
-        ))}
-      </ul>
-      
 
           <div className={`${styles.button}`}>
             <Link to={`${(role === "seller" && user) ? "/dashboard" : "/shop-create"}`}>

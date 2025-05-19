@@ -63,6 +63,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useDispatch, useSelector } from "react-redux";
 import { observeAuthState } from "./redux/actions/authAction.js";
 import { fetchUserData } from "./redux/actions/user.js";
+import SearchPage from "./pages/SearchPage.jsx";
 // import { addToCartThunk } from "./redux/actions/cartAction.js";
 
 
@@ -115,6 +116,7 @@ const App = () => {
         />
         <Route path="/products" element={<ProductsPage />} />
         <Route path="/product/:id" element={<ProductDetailsPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/best-selling" element={<BestSellingPage />} />
         <Route path="/events" element={<EventsPage />} />
         <Route path="/faq" element={<FAQPage />} />
