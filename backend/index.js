@@ -129,6 +129,48 @@ app.post("/products/upload", upload.array("images", 2), async (req, res) => {
 
 
 
+app.post("/events/upload", upload.array("images", 2), async (req, res) => {
+  try {
+    const uploadedImages = [];
+
+    for (const file of req.files) {
+      const blob = await put(`product-${Date.now()}-${file.originalname}`, file.buffer, {
+        access: "public",
+        token: "vercel_blob_rw_Qs8TU1vnT8DcWHAc_zdpU9ws5lQqgXajAH1DdxzZy7nff34", // Replace with your actual token
+        contentType: file.mimetype,
+        contentLength: file.size,
+      });
+
+      uploadedImages.push({ url: blob.url });
+    }
+
+    req.body.images = uploadedImages;
+    req.body.originalPrice = Number(req.body.originalPrice);
+    req.body.discountPrice = Number(req.body.discountPrice);
+    req.body.stock = Number(req.body.stock);
+    req.body.ratings = Number(req.body.ratings);
+    req.body.createdAt = new Date();
+    req.body.soldOut = 0;
+    // req.body.shop = {
+    //   "name" : req.body.shop.name,
+    //   "shopId" : req.body.shop.shopId,
+    //   "description": req.body.shop.description,
+    //   "avatar": req.body.shop.avatar,
+    // }
+    if (req.body.shop) {
+        req.body.shop = JSON.parse(req.body.shop);
+    }
+    console.log(req.body) 
+ 
+    const result = await Product(req.body).save();
+    res.status(200).send(result);
+  } catch (err) {
+    console.error("Upload Error:", err.message);
+    res.status(500).json({ error: "Failed to upload product" });
+  }
+});
+
+
 // Server test home route
 app.get("/", (req, res) => {
   console.log("world");
