@@ -23,7 +23,7 @@ const AllProducts = () => {
     const filtered = products?.filter((item) => item._id !== id);
     setProducts(filtered);
   };
-
+ 
   const columns = [
     { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
     {

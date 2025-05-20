@@ -11,9 +11,9 @@ const ShopCreateProduct = () => {
             <div className="w-[80px] 800px:w-[330px]">
               <DashboardSideBar active={4} />
             </div>
-            <div className="w-full justify-center flex">
+            <div className="w-full">
                 <CreateProduct />
-            </div>
+            </div> 
           </div>
     </div>
   )

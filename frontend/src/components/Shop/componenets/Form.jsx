@@ -44,7 +44,7 @@ const ProductUploadForm = ({ shopId }) => {
     setImages(files);
     setPreview(files.map((f) => URL.createObjectURL(f)));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (images.length !== 2) return alert("Upload exactly 2 images");

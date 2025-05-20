@@ -5,6 +5,6 @@ const api = axios.create({
     baseURL: "https://multivendor-ecommerce.vercel.app",
     timeout: 10000,
     headers: {"Content-Type": "application/json"}
-});   
+});    
 
-export default api;
+export default  api;
