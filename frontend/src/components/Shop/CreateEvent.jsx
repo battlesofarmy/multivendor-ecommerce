@@ -8,17 +8,19 @@ import { useEffect } from "react";
 import api from "../../utils/axiosCongif";
 
 const CreateEvent = () => {
-  const { user } = useSelector((state) => state.auth);
-  const [userData, setUserData] = useState(null);
+      const { user } = useSelector((state)=> state.auth);
+    
+  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(()=>{
     api.get(`/user/${user?.uid}`)
     .then((res)=> {
       setUserData(res.data);
+      console.log(res.data)
     })
     .catch((err)=> console.log(err))
-  },[])
+  },[user])
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -70,13 +72,15 @@ const CreateEvent = () => {
     formData.append("stock", stock);
     formData.append("shop", JSON.stringify({
       name: userData?.shop?.name,
+      description: userData?.shop?.description || "best shop",  // <- Add this line
       shopId: userData?.uid,
       avatar: {
         url: userData?.shop?.avatar || "",
       },
     }));
-    formData.append("start_Date", startDate?.toISOString());
-    formData.append("Finish_Date", endDate?.toISOString());
+
+    formData.append("startDate", startDate?.toISOString());
+    formData.append("finishDate", endDate?.toISOString());
 
     images.forEach((image) => {
       formData.append("images", image);
@@ -90,14 +94,8 @@ const CreateEvent = () => {
         body: formData,
       });
       const data = await res.json();
-
-      if (data.success) {
-        toast.success("Event created successfully!");
-        navigate("/dashboard-events");
-        window.location.reload();
-      } else {
-        toast.error(data.message || "Event creation failed");
-      }
+      
+      toast.success("Event created successfully!");
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong!");
@@ -153,7 +151,7 @@ const CreateEvent = () => {
         <br />
         <div>
           <label className="pb-2">Event Start Date <span className="text-red-500">*</span></label>
-          <input type="date" name="start_date" id="start-date" className="appearance-none mt-2 block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" min={today} onChange={handleStartDateChange} />
+          <input type="date" name="startDate" id="start-date" className="appearance-none mt-2 block w-full px-3 h-[35px] border border-gray-300 rounded-[3px] placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" min={today} onChange={handleStartDateChange} />
         </div>
         <br />
         <div>

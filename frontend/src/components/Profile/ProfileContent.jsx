@@ -167,7 +167,7 @@ const ProfileContent = ({ active }) => {
 };
 
 const AllOrders = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.auth);
   const { orders } = useSelector((state) => state.order);
   const dispatch = useDispatch();
 

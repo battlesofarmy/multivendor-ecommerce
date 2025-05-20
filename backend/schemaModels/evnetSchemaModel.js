@@ -1,73 +1,73 @@
-const mongoose = require('mongoose');
+// models/Event.js
+const mongoose = require("mongoose");
 
-const eventSchema = mongoose.Schema({
+const eventSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, "Enter your event name!"],
+    required: [true, "Please enter event name"],
   },
   description: {
     type: String,
-    required: [true, "Enter your event description!"],
+    required: [true, "Please enter event description"],
   },
   category: {
     type: String,
-    required: [true, "Enter your event category!"],
-  },
-  startDate: {
-    type: Date,
-    required: [true, "Enter your start date!"],
-  },
-  finishDate: {
-    type: Date,
-    required: [true, "Enter your finish date!"],
-  },
-  status: {
-    type: String,
-    default: "Running",
+    required: [true, "Please select a category"],
   },
   tags: {
     type: String,
   },
   originalPrice: {
     type: Number,
-    default: 0,
   },
   discountPrice: {
     type: Number,
-    required: [true, "Enter your discount price!"],
+    required: [true, "Please enter discount price"],
   },
   stock: {
     type: Number,
-    required: [true, "Enter your stock quantity!"],
+    required: [true, "Please enter product stock"],
   },
   images: [
     {
-      publicId: {
-        type: String,
-        required: [true, "Enter your public id!"],
-      },
+      public_id: String, // if using Cloudinary or similar
       url: {
         type: String,
-        required: [true, "Enter your image URL!"],
+        required: true,
       },
     },
   ],
-  shopId: {
-    type: String,
-    required: [true, "Enter your shop id!"],
-  },
   shop: {
-    type: Object,
-    required: [true, "Shop object is required!"],
+    name: {
+      type: String,
+      required: true,
+    },
+    description: {
+      type: String,
+    },
+    shopId: {
+      type: String,
+      required: true,
+    },
+    avatar: {
+      url: {
+        type: String,
+      },
+    },
   },
-  soldOut: {
-    type: Number,
-    default: 0,
+  startDate: {
+    type: Date,
+    required: [true, "Start date is required"],
+  },
+  finishDate: {
+    type: Date,
+    required: [true, "End date is required"],
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-}, { versionKey: false });
+});
+
 
 module.exports = mongoose.model("Event", eventSchema);
