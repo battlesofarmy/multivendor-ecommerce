@@ -14,6 +14,7 @@ const useCartStore = create((set) => ({
     }
   },
 
+  // hello  world
   addToCart: (item) =>
     set((state) => ({
       cart: [...state.cart, item],
