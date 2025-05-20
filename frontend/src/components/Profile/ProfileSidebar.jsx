@@ -67,34 +67,6 @@ const ProfileSidebar = ({ setActive, active }) => {
 
       <div
         className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(4) || navigate("/inbox")}
-      >
-        <AiOutlineMessage size={20} color={active === 4 ? "red" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 4 ? "text-[red]" : ""
-          } 800px:block hidden`}
-        >
-          Inbox
-        </span>
-      </div>
-
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
-        onClick={() => setActive(5)}
-      >
-        <MdOutlineTrackChanges size={20} color={active === 5 ? "red" : ""} />
-        <span
-          className={`pl-3 ${
-            active === 5 ? "text-[red]" : ""
-          } 800px:block hidden`}
-        >
-          Track Order
-        </span>
-      </div>
-
-      <div
-        className="flex items-center cursor-pointer w-full mb-8"
         onClick={() => setActive(6)}
       >
         <RiLockPasswordLine size={20} color={active === 6 ? "red" : ""} />
@@ -118,7 +90,8 @@ const ProfileSidebar = ({ setActive, active }) => {
           } 800px:block hidden`}
         >
           Address
-        </span>
+        </span>                onSubmit={()=> toast.success("Profile Updated Succesfully")}
+        
       </div>
 
       {user && user?.role === "Admin" && (

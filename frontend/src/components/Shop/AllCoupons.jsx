@@ -248,13 +248,14 @@
 
 
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid"
 import { AiOutlineDelete } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import styles from "../../styles/styles";
 import { toast } from "react-toastify";
+import api from "../../utils/axiosCongif";
 
 const AllCoupons = () => {
   const [open, setOpen] = useState(false);
@@ -264,12 +265,17 @@ const AllCoupons = () => {
   const [maxAmount, setMaxAmount] = useState(null);
   const [selectedProducts, setSelectedProducts] = useState(null);
 
-  const [coupons, setCoupons] = useState([
-    { _id: "1", name: "SUMMER20", value: 20 },
-    { _id: "2", name: "NEWUSER10", value: 10 },
-    { _id: "3", name: "FREESHIP", value: 5 },
-    { _id: "4", name: "BLACKFRIDAY", value: 50 },
-  ]);
+  const [coupons, setCoupons] = useState([]);
+
+  useEffect(()=>{
+    api.get('/cupon')
+    .then((res)=>{
+      setCoupons(res.data);
+      console.log(res.data);
+    })
+    .catch((err)=> console.log(err))
+  },[])
+
 
   const sampleProducts = [
     { _id: "p1", name: "iPhone 15" },
@@ -290,6 +296,14 @@ const AllCoupons = () => {
       value: Number(value),
     };
     setCoupons((prev) => [...prev, newCoupon]);
+
+    api.post('/cupon', newCoupon)
+    .then((res)=>{
+      console.log(res.data);
+    })
+    .catch((err)=> console.log(err))
+
+
     toast.success("Coupon created!");
     setOpen(false);
     setName("");
@@ -345,7 +359,7 @@ const AllCoupons = () => {
 
         {open && (
           <div className="fixed top-0 left-0 w-full h-screen bg-[#00000062] z-[20000] flex items-center justify-center">
-            <div className="w-[90%] 800px:w-[40%] h-[80vh] bg-white rounded-md shadow p-4">
+            <div className="w-[90%] 800px:w-[40%] h-[95vh] bg-white rounded-md shadow px-4 py-2">
               <div className="w-full flex justify-end">
                 <RxCross1
                   size={30}
@@ -353,13 +367,13 @@ const AllCoupons = () => {
                   onClick={() => setOpen(false)}
                 />
               </div>
-              <h5 className="text-[30px] font-Poppins text-center">
+              <h5 className="text-[20px] font-Poppins text-center">
                 Create Coupon Code
               </h5>
               <form onSubmit={handleSubmit}>
                 <br />
                 <div>
-                  <label className="pb-2">
+                  <label className="pb-1">
                     Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -373,7 +387,7 @@ const AllCoupons = () => {
                 </div>
                 <br />
                 <div>
-                  <label className="pb-2">
+                  <label className="pb-1">
                     Discount Percentage <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -387,7 +401,7 @@ const AllCoupons = () => {
                 </div>
                 <br />
                 <div>
-                  <label className="pb-2">Min Amount</label>
+                  <label className="pb-1">Min Amount</label>
                   <input
                     type="number"
                     value={minAmount ?? ""}
@@ -398,7 +412,7 @@ const AllCoupons = () => {
                 </div>
                 <br />
                 <div>
-                  <label className="pb-2">Max Amount</label>
+                  <label className="pb-1">Max Amount</label>
                   <input
                     type="number"
                     value={maxAmount ?? ""}
@@ -409,7 +423,7 @@ const AllCoupons = () => {
                 </div>
                 <br />
                 <div>
-                  <label className="pb-2">Selected Product</label>
+                  <label className="pb-1">Selected Product</label>
                   <select
                     value={selectedProducts ?? ""}
                     onChange={(e) => setSelectedProducts(e.target.value)}

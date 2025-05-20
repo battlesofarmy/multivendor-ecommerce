@@ -1,19 +1,10 @@
-const Event = require('../schemaModels/evnetSchemaModel');
+const Cupon = require('../schemaModels/coupounCodeSchemalModel');
 const express = require('express');
 const router = express.Router();
 
 router.get('/', async(req, res)=>{
     try{
-        const result = await Event.find({});
-        res.status(200).send(result);
-    }catch(err){
-        res.status(500).send(err.message);
-    }
-})
-
-router.get('/:id', async(req, res)=>{
-    try{
-        const result = await Event.find({});
+        const result = await Cupon.find({});
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);
@@ -23,7 +14,7 @@ router.get('/:id', async(req, res)=>{
 
 router.post('/', async(req, res)=>{
     try{
-        const result = await Event(req.body).save();
+        const result = await Cupon(req.body).save();
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);
@@ -34,7 +25,7 @@ router.post('/', async(req, res)=>{
 // Delete all
 router.delete('/', async(req, res)=> {
     try{
-        const result = await Event.deleteMany({});
+        const result = await Cupon.deleteMany({});
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);

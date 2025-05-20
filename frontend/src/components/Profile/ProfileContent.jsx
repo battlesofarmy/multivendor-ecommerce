@@ -18,11 +18,12 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { getAllOrdersOfUser } from "../../redux/actions/order";
 import { fetchUserData } from "../../redux/actions/user";
+import api from "../../utils/axiosCongif";
 
 const ProfileContent = ({ active }) => {
-  const getUserData  = useSelector((state)=> state.user.userData);
   const [userData, setUserData ]  = useState(null);
   const { user } = useSelector((state)=> state.auth);
+  
 
   const [name, setName] = useState(user && userData?.name);
   const [email, setEmail] = useState(user && userData?.email);
@@ -32,16 +33,21 @@ const ProfileContent = ({ active }) => {
   const dispatch = useDispatch();
 
 
-    console.log(userData  , " user data")
-    console.log(name, " user name");
   
     useEffect(() => {
-      setUserData(getUserData);
-    }, [dispatch]);
+      api.get(`/user/${user?.uid}`)
+      .then((res)=> {
+        setUserData(res.data);
+        console.log(res.data);
+      })
+      .catch((err)=> console.log(err))
+      console.log(user)
+    }, [user?.uid]);
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    toast.success("Profile Updated Succesfully");
   };
 
   const handleImage = async (e) => {
@@ -57,11 +63,8 @@ const ProfileContent = ({ active }) => {
         <>
           <div className="flex justify-center w-full">
             <div className="relative">
-              {
-                console.log(user)
-              }
               <img
-                src={`${user?.photoURL}`}
+                src={`${userData?.avatar}`}
                 className="w-[150px] h-[150px] rounded-full object-cover border-[3px] border-[#3ad132]"
                 alt=""
               />
@@ -89,7 +92,7 @@ const ProfileContent = ({ active }) => {
                     type="text"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                     required
-                    value={getUserData?.name}
+                    value={userData?.name}
                     onChange={(e) => setName(e.target.value)}
                   />
                 </div>
@@ -99,7 +102,7 @@ const ProfileContent = ({ active }) => {
                     type="text"
                     className={`${styles.input} !w-[95%] mb-1 800px:mb-0`}
                     required
-                    value={email}
+                    value={userData?.email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
@@ -112,7 +115,7 @@ const ProfileContent = ({ active }) => {
                     type="number"
                     className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
                     required
-                    value={phoneNumber}
+                    value={userData?.phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                   />
                 </div>
@@ -420,6 +423,7 @@ const TrackOrder = () => {
   );
 };
 
+
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -444,6 +448,11 @@ const ChangePassword = () => {
         toast.error(error.response.data.message);
       });
   };
+//   const handleSubmit = (e) => {
+//   e.preventDefault();
+//   toast.success("Profile Updated Successfully");
+// };
+
   return (
     <div className="w-full px-5">
       <h1 className="block text-[25px] text-center font-[600] text-[#000000ba] pb-2">
@@ -489,6 +498,7 @@ const ChangePassword = () => {
               required
               value="Update"
               type="submit"
+              // onSubmit={()=> toast.success('Successfully Updated Profile')}
             />
           </div>
         </form>
@@ -522,28 +532,6 @@ const Address = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // if (addressType === "" || country === "" || city === "") {
-    //   toast.error("Please fill all the fields!");
-    // } else {
-    //   dispatch(
-    //     updatUserAddress(
-    //       country,
-    //       city,
-    //       address1,
-    //       address2,
-    //       zipCode,
-    //       addressType
-    //     )
-    //   );
-    //   setOpen(false);
-    //   setCountry("");
-    //   setCity("");
-    //   setAddress1("");
-    //   setAddress2("");
-    //   setZipCode(null);
-    //   setAddressType("");
-    // }
   };
 
   const handleDelete = (item) => {
@@ -552,6 +540,7 @@ const Address = () => {
 
   return (
     <div className="w-full px-5">
+      hello johfa
       {open && (
         <div className="fixed w-full h-screen bg-[#0000004b] top-0 left-0 flex items-center justify-center ">
           <div className="w-[35%] h-[80vh] bg-white rounded shadow relative overflow-y-scroll">

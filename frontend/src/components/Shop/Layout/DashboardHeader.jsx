@@ -44,16 +44,10 @@ const DashboardHeader = () => {
           <Link to="/dashboard-orders" className="800px:block hidden">
             <FiPackage color="#555" size={30} className="mx-5 cursor-pointer" />
           </Link>
-          <Link to="/dashboard-messages" className="800px:block hidden">
-            <BiMessageSquareDetail
-              color="#555"
-              size={30}
-              className="mx-5 cursor-pointer"
-            />
-          </Link>
           <Link to={`/shop/${seller?._id}`}>
             <img
-              src={`${seller?.avatar?.url}`}
+              // src={`${seller?.avatar}`}
+              src={"https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?ga=GA1.1.1650575730.1747700408&semt=ais_hybrid&w=740"}
               alt=""
               className="w-[50px] h-[50px] rounded-full object-cover"
             />
