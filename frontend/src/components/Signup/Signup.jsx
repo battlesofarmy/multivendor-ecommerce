@@ -56,7 +56,7 @@ const Singup = () => {
           "name": name,
           "email": currentUser?.email,
           "phoneNumber": phoneNumber,
-          "avatar": "https://avatars.githubusercontent.com/u/155252694?v=4",
+          "avatar": "https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?ga=GA1.1.1650575730.1747700408&semt=ais_hybrid&w=740",
           "address": [],
           "role": "user",
         }

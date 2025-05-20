@@ -67,8 +67,8 @@ const ProductUploadForm = ({ shopId }) => {
     
     console.log(shopData); 
     try {
-      // const res = await fetch("http://localhost:5000/products/upload", {
-      const res = await fetch("https://multivendor-ecommerce.vercel.app/products/upload", {
+      const res = await fetch("http://localhost:5000/products/upload", {
+      // const res = await fetch("https://multivendor-ecommerce.vercel.app/products/upload", {
         method: "POST",
         body: formData,
       });

@@ -22,10 +22,12 @@ mongoose.connect(process.env.DB_URL)
 const productHandler = require('./routeHandlers/productHandler');
 const userHandler = require('./routeHandlers/userHanlder');
 const cartHandler = require('./routeHandlers/cartHandler');
+const eventHandler = require('./routeHandlers/eventhanlder');
 
 app.use('/products', productHandler);
 app.use('/user', userHandler);
 app.use('/cart', cartHandler);
+app.use('/event', eventHandler);
 
 const Product = require('./schemaModels/productSchemaModel');
 

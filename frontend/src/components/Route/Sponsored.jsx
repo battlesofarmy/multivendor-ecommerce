@@ -23,14 +23,14 @@ const Sponsored = () => {
         </div>
         <div className="flex items-start">
           <img
-            src="https://logos-world.net/wp-content/uploads/2020/08/Dell-Logo-1989-2016.png"
+            src="https://investors.jbhifi.com.au/wp-content/uploads/2016/12/Lenovo-logo-vector.png"
             style={{width:"150px", objectFit:"contain"}}
             alt=""
           />
         </div>
         <div className="flex items-start">
           <img
-            src="https://logos-world.net/wp-content/uploads/2020/08/Dell-Logo-1989-2016.png"
+            src="https://logos-world.net/wp-content/uploads/2020/07/Asus-Logo-1995-present.png"
             style={{width:"150px", objectFit:"contain"}}
             alt=""
           />

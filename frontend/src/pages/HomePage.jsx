@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 
 
 const HomePage = () => {
-  const userData = useSelector((state)=> state.user.userData);
 
 
   return (

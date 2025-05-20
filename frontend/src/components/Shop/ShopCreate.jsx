@@ -15,14 +15,15 @@ const ShopCreate = () => {
   const [address, setAddress] = useState("");
   const [zipCode, setZipCode] = useState();
   const {user} = useSelector((state)=> state.auth);
+  const nagivate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const form = e.target;
+    // const form = e.target;
     // const shopName = form.name.value;
     // const shopEmail = form.email.value;
     // const shopProfile = form.email.value;
-    const avatar = "https://avatars.githubusercontent.com/u/155252694?v=4";
+    const avatar = "https://img.freepik.com/free-vector/shop-with-sign-we-are-open_23-2148547718.jpg?semt=ais_hybrid&w=740";
 
     const shopData =  {
         name, email, avatar, zipCode, address, phoneNumber,
@@ -31,24 +32,16 @@ const ShopCreate = () => {
 
       await api.post("/user/create-shop", {uid: user?.uid, shopData})
       .then((res) => {
-        toast.success(res.data.message);
+        toast.success("Seller Profile Created Successfully");
+        setTimeout(()=>{
+            nagivate("/dashboard")
+        },3000)
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        toast.error(error.message);
       });
   };
 
-  // const handleFileInputChange = (e) => {
-  //   const reader = new FileReader();
-
-  //   reader.onload = () => {
-  //     if (reader.readyState === 2) {
-  //       setAvatar(reader.result);
-  //     }
-  //   };
-
-  //   reader.readAsDataURL(e.target.files[0]);
-  // };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-8 sm:px-6 lg:px-8">
