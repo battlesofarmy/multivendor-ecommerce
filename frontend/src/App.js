@@ -64,6 +64,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { observeAuthState } from "./redux/actions/authAction.js";
 import { fetchUserData } from "./redux/actions/user.js";
 import SearchPage from "./pages/SearchPage.jsx";
+import EventsDetails from "./pages/EventsDetails.jsx";
 // import { addToCartThunk } from "./redux/actions/cartAction.js";
 
 
@@ -119,6 +120,7 @@ const App = () => {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/best-selling" element={<BestSellingPage />} />
         <Route path="/events" element={<EventsPage />} />
+        <Route path="/events/:id" element={<EventsDetails/>} />
         <Route path="/faq" element={<FAQPage />} />
         <Route
           path="/checkout"

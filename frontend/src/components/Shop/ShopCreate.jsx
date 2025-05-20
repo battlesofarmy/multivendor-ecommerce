@@ -35,7 +35,7 @@ const ShopCreate = () => {
         toast.success("Seller Profile Created Successfully");
         setTimeout(()=>{
             nagivate("/dashboard")
-        },3000)
+        },2000)
       })
       .catch((error) => {
         toast.error(error.message);

@@ -148,33 +148,13 @@ const AllEvents = () => {
     })
     .catch((err)=> console.log(err))
   },[])
-  // const [events, setEvents] = useState([
-  //   {
-  //     _id: "event1",
-  //     name: "Summer Electronics Sale",
-  //     discountPrice: 79.99,
-  //     stock: 50,
-  //     sold_out: 22,
-  //   },
-  //   {
-  //     _id: "event2",
-  //     name: "Black Friday Tech",
-  //     discountPrice: 199.99,
-  //     stock: 30,
-  //     sold_out: 18,
-  //   },
-  //   {
-  //     _id: "event3",
-  //     name: "Winter Gadget Fair",
-  //     discountPrice: 99.99,
-  //     stock: 70,
-  //     sold_out: 35,
-  //   },
-  // ]);
 
   const handleDelete = (id) => {
     const filtered = events.filter((item) => item._id !== id);
     setEvents(filtered);
+    api.delete(`/event/${id}`)
+    .then(()=> console.log("event deleted"))
+    .catch((err)=> console.log(err))
   };
 
   const columns = [
@@ -182,10 +162,22 @@ const AllEvents = () => {
     {
       field: "name",
       headerName: "Name",
-      minWidth: 180,
+      minWidth: 50,
       flex: 1.4,
-    },
-    {
+    },{
+        field: "image",
+        headerName: "Image",
+        minWidth: 100,
+        flex: 0.6,
+        sortable: false,
+        renderCell: (params) => (
+          <img
+            src={params.value}
+            alt="product"
+            style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "8px" }}
+          />
+        ),
+      },{
       field: "price",
       headerName: "Price",
       minWidth: 100,
@@ -199,22 +191,14 @@ const AllEvents = () => {
       flex: 0.5,
     },
     {
-      field: "sold",
-      headerName: "Sold out",
-      type: "number",
-      minWidth: 130,
-      flex: 0.6,
-    },
-    {
       field: "Preview",
       flex: 0.8,
       minWidth: 100,
       headerName: "",
       sortable: false,
       renderCell: (params) => {
-        const productNameSlug = params.row.name.replace(/\s+/g, "-");
         return (
-          <Link to={`/product/${productNameSlug}`}>
+          <Link to={`/events/${params.id}`}>
             <Button>
               <AiOutlineEye size={20} />
             </Button>
@@ -239,9 +223,9 @@ const AllEvents = () => {
   const rows = events.map((item) => ({
     id: item._id,
     name: item.name,
+    image: item.images[0].url,
     price: "US$ " + item.discountPrice,
     Stock: item.stock,
-    sold: item.sold_out,
   }));
 
   return (

@@ -59,6 +59,18 @@ router.post('/', async(req, res)=>{
 
 
 
+
+router.delete('/:id', async(req, res)=> {
+    const { id } = req.params;
+    try{
+        const result = await Product.deleteOne({_id: id});
+        res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+})
+
+
 // Delete all
 router.delete('/', async(req, res)=> {
     try{

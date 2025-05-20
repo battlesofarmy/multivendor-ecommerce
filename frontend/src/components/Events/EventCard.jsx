@@ -9,9 +9,13 @@ import useCartStore from "../../store/cartStore";
 
 const EventCard = ({ active, data }) => {
   const cart = useCartStore((state)=> state.cart);
+  const addToCart = useCartStore((state) => state.addToCart);
+  
   const dispatch = useDispatch();
 
   const addToCartHandler = (data) => {
+    addToCart(data);
+
     const isItemExists = cart && cart.find((i) => i._id === data?._id);
     if (isItemExists) {
       toast.error("Item already in cart!");
@@ -53,8 +57,8 @@ const EventCard = ({ active, data }) => {
         <CountDown data={data || 0} />
         <br />
         <div className="flex items-center">
-          <Link to={`/product/${data?._id}?isEvent=true`}>
-            <div className={`${styles.button} text-[#fff]`}>See Details</div>
+          <Link to={`/events/${data?._id}`}>
+            <div className={`${styles.button} text-[#fff]`}>View Details</div>
           </Link>
           <div className={`${styles.button} text-[#fff] ml-5`} onClick={() => addToCartHandler(data)}>Add to cart</div>
         </div>

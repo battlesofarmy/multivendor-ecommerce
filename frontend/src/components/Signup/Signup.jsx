@@ -24,7 +24,8 @@ const Singup = () => {
  
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const nagivate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -64,6 +65,9 @@ const Singup = () => {
       await api.post('/user', newUser)
       .then((res)=>{
         setSuccessMessage("Registration Successful");
+        setTimeout(()=>{
+            nagivate("/dashboard")
+        },2000)
       })
       .catch((err)=>{
          setErrorMessage(err.message || "User creation Fail");

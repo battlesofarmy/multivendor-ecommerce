@@ -8,7 +8,6 @@ import AddNew from "./componenets/AddNew";
 
 const AllProducts = () => {
   const [products, setProducts] = useState(null);
-  
 
   useEffect(()=>{
     api.get('/products')
@@ -22,23 +21,35 @@ const AllProducts = () => {
   const handleDelete = (id) => {
     const filtered = products?.filter((item) => item._id !== id);
     setProducts(filtered);
+    api.delete(`/products/${id}`)
   };
  
   const columns = [
-    { field: "id", headerName: "Product Id", minWidth: 150, flex: 0.7 },
+    { field: "id", headerName: "Product Id", minWidth: 50, flex: 0.7 },
     {
       field: "name",
       headerName: "Name",
-      minWidth: 180,
+      minWidth: 140,
       flex: 1.4,
-    },
-    {
+    },{
+        field: "image",
+        headerName: "Image",
+        minWidth: 100,
+        flex: 0.6,
+        sortable: false,
+        renderCell: (params) => (
+          <img
+            src={params.value}
+            alt="product"
+            style={{ width: "40px", height: "40px", objectFit: "cover", borderRadius: "8px" }}
+          />
+        ),
+      },{
       field: "price",
       headerName: "Price",
       minWidth: 100,
       flex: 0.6,
-    },
-    {
+    },{
       field: "Stock",
       headerName: "Stock",
       type: "number",
@@ -83,6 +94,7 @@ const AllProducts = () => {
   const rows = products?.map((item) => ({
     id: item._id,
     name: item.name,
+    image: item.images?.[0]?.url || "",
     price: "US$ " + item.discountPrice,
     Stock: item.stock,
     sold: item.soldOut,
