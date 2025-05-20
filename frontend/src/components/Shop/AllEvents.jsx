@@ -132,34 +132,45 @@
 
 import { Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import api from '../../utils/axiosCongif'
 
 const AllEvents = () => {
-  const [events, setEvents] = useState([
-    {
-      _id: "event1",
-      name: "Summer Electronics Sale",
-      discountPrice: 79.99,
-      stock: 50,
-      sold_out: 22,
-    },
-    {
-      _id: "event2",
-      name: "Black Friday Tech",
-      discountPrice: 199.99,
-      stock: 30,
-      sold_out: 18,
-    },
-    {
-      _id: "event3",
-      name: "Winter Gadget Fair",
-      discountPrice: 99.99,
-      stock: 70,
-      sold_out: 35,
-    },
-  ]);
+  const [events, setEvents] = useState([]);
+  
+  useEffect(()=>{
+    api.get("/event")
+    .then((res)=> {
+      setEvents(res.data);
+      console.log(res.data);
+    })
+    .catch((err)=> console.log(err))
+  },[])
+  // const [events, setEvents] = useState([
+  //   {
+  //     _id: "event1",
+  //     name: "Summer Electronics Sale",
+  //     discountPrice: 79.99,
+  //     stock: 50,
+  //     sold_out: 22,
+  //   },
+  //   {
+  //     _id: "event2",
+  //     name: "Black Friday Tech",
+  //     discountPrice: 199.99,
+  //     stock: 30,
+  //     sold_out: 18,
+  //   },
+  //   {
+  //     _id: "event3",
+  //     name: "Winter Gadget Fair",
+  //     discountPrice: 99.99,
+  //     stock: 70,
+  //     sold_out: 35,
+  //   },
+  // ]);
 
   const handleDelete = (id) => {
     const filtered = events.filter((item) => item._id !== id);

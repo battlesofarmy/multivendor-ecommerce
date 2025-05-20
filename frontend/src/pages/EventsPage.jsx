@@ -29,35 +29,48 @@ import EventCard from "../components/Events/EventCard";
 import Header from "../components/Layout/Header";
 import Loader from "../components/Layout/Loader";
 import Footer from "../components/Layout/Footer";
+import api from "../utils/axiosCongif";
 
 const EventsPage = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  const allEvents = [
-    {
-      _id: "evt-123",
-      name: "Mega Discount Flash Sale",
-      description: "Get the best products at half price for 24 hours only!",
-      originalPrice: 200,
-      discountPrice: 100,
-      sold_out: 35,
-      stock: 100,
-      images: [{ url: "https://qs8tu1vnt8dcwhac.public.blob.vercel-storage.com/product-1747700198777-Huawei-Nova-14-Pro-Blue.webp" }],
-      startDate: "2025-04-15T00:00:00Z",
-      endDate: "2025-04-16T00:00:00Z"
-    },{
-      _id: "evt-123",
-      name: "Mega Discount Flash Sale",
-      description: "Get the best products at half price for 24 hours only!",
-      originalPrice: 200,
-      discountPrice: 100,
-      sold_out: 35,
-      stock: 100,
-      images: [{ url: "https://qs8tu1vnt8dcwhac.public.blob.vercel-storage.com/product-1747700198777-Huawei-Nova-14-Pro-Blue.webp" }],
-      startDate: "2025-04-15T00:00:00Z",
-      endDate: "2025-04-16T00:00:00Z"
-    }
-  ];
+
+  const [events, setEvents] = useState([]);
+  
+  useEffect(()=>{
+    api.get("/event")
+    .then((res)=> {
+      setEvents(res.data);
+      console.log(res.data);
+    })
+    .catch((err)=> console.log(err))
+  },[])
+
+  // const allEvents = [
+  //   {
+  //     _id: "evt-123",
+  //     name: "Mega Discount Flash Sale",
+  //     description: "Get the best products at half price for 24 hours only!",
+  //     originalPrice: 200,
+  //     discountPrice: 100,
+  //     sold_out: 35,
+  //     stock: 100,
+  //     images: [{ url: "https://qs8tu1vnt8dcwhac.public.blob.vercel-storage.com/product-1747700198777-Huawei-Nova-14-Pro-Blue.webp" }],
+  //     startDate: "2025-04-15T00:00:00Z",
+  //     endDate: "2025-04-16T00:00:00Z"
+  //   },{
+  //     _id: "evt-123",
+  //     name: "Mega Discount Flash Sale",
+  //     description: "Get the best products at half price for 24 hours only!",
+  //     originalPrice: 200,
+  //     discountPrice: 100,
+  //     sold_out: 35,
+  //     stock: 100,
+  //     images: [{ url: "https://qs8tu1vnt8dcwhac.public.blob.vercel-storage.com/product-1747700198777-Huawei-Nova-14-Pro-Blue.webp" }],
+  //     startDate: "2025-04-15T00:00:00Z",
+  //     endDate: "2025-04-16T00:00:00Z"
+  //   }
+  // ];
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1000); // simulate loading
@@ -73,7 +86,7 @@ const EventsPage = () => {
             <Header activeHeading={4} />
             <div className="container mx-auto">
               {
-                allEvents?.map((ele)=>
+                events?.map((ele)=>
                   <EventCard active={true} data={ele} />
                 )
               }
