@@ -30,6 +30,7 @@ app.use('/cart', cartHandler);
 app.use('/event', eventHandler);
 
 const Product = require('./schemaModels/productSchemaModel');
+// const Product = require('./schemaModels/productSchemaModel');
 
 
 
