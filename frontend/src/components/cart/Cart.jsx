@@ -97,6 +97,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
       setValue(newQty);
       increaseCartCount(data);
     }
+    console.log("HI increase")
   };
 
   const decrement = (data) => {

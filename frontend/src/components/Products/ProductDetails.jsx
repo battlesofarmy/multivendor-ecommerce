@@ -405,6 +405,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { addToWishlistThunk, removeFromWishlistThunk } from "../../redux/actions/wishlist";
+import useCartStore from "../../store/cartStore";
 
 // Mock styles module
 const styles = {
@@ -424,16 +425,24 @@ const ProductDetails = ({data}) => {
   const [select, setSelect] = useState(0);
   const dispatch = useDispatch();
   const { wishlist } = useSelector((state)=> state.wishlist);
+   const addToCart = useCartStore((state) => state.addToCart);
+
+
 
   useEffect(()=>{
-    // const result = wishlist?.map(ele=> console.log(ele._id));
-    // if(result) setClick(true);
-    // console.log(data._id)
+    wishlist?.map(ele=>{
+      if(ele) setClick(true);
+    });
     console.log(data);
   },[wishlist])
+  const increaseCartCount = useCartStore((state)=> state.increaseCartCount);
+  const decreaseCartCount = useCartStore((state)=> state.decreaseCartCount);
 
-  const incrementCount = () => setCount(count + 1);
-  const decrementCount = () => count > 1 && setCount(count - 1);
+  
+
+  const incrementCount = () => increaseCartCount(data);
+  const decrementCount = () => decreaseCartCount(data);
+
   const toggleWishlist = () =>{
     if(click){
       dispatch(removeFromWishlistThunk(data._id))
@@ -442,8 +451,9 @@ const ProductDetails = ({data}) => {
     }
     setClick(!click);
   }
+  
   const addToCartHandler = () =>{
-    
+    addToCart(data);
     toast.success("Added to cart!");
   }
 
