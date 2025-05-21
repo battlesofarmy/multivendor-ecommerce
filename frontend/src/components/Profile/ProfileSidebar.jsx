@@ -12,6 +12,7 @@ import { RxPerson } from "react-icons/rx";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {logoutUser} from '../../redux/actions/authAction'
+import { toast } from "react-toastify";
 
 const ProfileSidebar = ({ setActive, active }) => {
   const navigate = useNavigate();
