@@ -10,25 +10,21 @@ import { server } from "../../server";
 import { toast } from "react-toastify";
 import { getAllSellers } from "../../redux/actions/sellers";
 import { Link } from "react-router-dom";
+import api from "../../utils/axiosCongif";
 
 const AllSellers = () => {
-  const dispatch = useDispatch();
-  const { sellers } = useSelector((state) => state.seller);
   const [open, setOpen] = useState(false);
   const [userId, setUserId] = useState("");
+  const [sellers, setSellers] = useState([]);
 
   useEffect(() => {
-    dispatch(getAllSellers());
-  }, [dispatch]);
+    api.get('/user/seller',)
+    .then((res)=> setSellers(res.data))
+    .catch((err)=> console.log(err))
+  }, []);
 
   const handleDelete = async (id) => {
-    await axios
-    .delete(`${server}/shop/delete-seller/${id}`, { withCredentials: true })
-    .then((res) => {
-      toast.success(res.data.message);
-    });
-
-  dispatch(getAllSellers());
+    toast.success("Deleted Request Send");
   };
 
   const columns = [

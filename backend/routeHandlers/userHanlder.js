@@ -3,6 +3,25 @@ const express = require('express');
 const router = express.Router();
 
 
+router.get('/', async(req, res)=>{
+    try{
+        const result = await User.find({});
+        res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+})
+
+router.get('/seller', async(req, res)=>{
+    try{
+        const result = await User.find({role: "seller"});
+        res.status(200).send(result);
+    }catch(err){
+        res.status(500).send(err.message);
+    }
+})
+
+
 router.post('/', async(req, res)=>{
     const { uid } = req.body;
     const exists = await User.find({uid});
@@ -55,6 +74,7 @@ router.get('/:uid', async(req, res)=>{
         res.status(500).send(err.message);
     }
 })
+
 router.get('/role/:uid', async(req, res)=>{
     // console.log(req.params.uid)
     const { uid } = req.params;
@@ -66,14 +86,7 @@ router.get('/role/:uid', async(req, res)=>{
     }
 })
 
-router.get('/', async(req, res)=>{
-    try{
-        const result = await User.find({});
-        res.status(200).send(result);
-    }catch(err){
-        res.status(500).send(err.message);
-    }
-})
+
 
 router.delete('/', async(req, res)=>{
     try{

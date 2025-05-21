@@ -17,7 +17,6 @@ const ShopCreate = () => {
   const {user} = useSelector((state)=> state.auth);
   const nagivate = useNavigate()
 
- 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,7 +48,15 @@ const ShopCreate = () => {
 <>
  
  {
-  user ? <h2>Register First to create an Seller Account</h2> : (
+  !user ? <div className={"flex justify-center items-center h-screen"}>
+    <div>
+      <h2 className={"text-2xl mb-3"}>Register First to create an Seller Account</h2>
+    <div className="flex gap-4 justify-center">
+      <Link to='/'><button className="py-1 px-2 bg-gray-800 text-white">Back to Home</button></Link>
+      <Link to='/sign-up'><button className="py-1 px-2 bg-gray-800 text-white">Register</button></Link>
+    </div>
+    </div>
+  </div> : (
 <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-8 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
