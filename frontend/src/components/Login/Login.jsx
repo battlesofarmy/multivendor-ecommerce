@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 // import { signInUser } from "../../redux/reducers/authSlice";
 import { loginUser } from "../../redux/actions/authAction";
+import { toast } from "react-toastify";
 
 
 const Login = () => {
@@ -40,10 +41,11 @@ const Login = () => {
       await dispatch(loginUser({email, password})).unwrap();
       console.log("Logint succesfull");
       navigate('/profile');
-      window.location.reload();
+      // window.location.reload();
 
     }catch(err){
-       console.error("Login failed:", err);
+      //  console.error("Login failed:", err);
+       toast.error("Login Fail")
     }
 
     // dispatch(loginUser({ email, password }));

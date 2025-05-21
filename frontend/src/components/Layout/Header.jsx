@@ -145,12 +145,22 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className={`${styles.button}`}>
+            {
+              role === "admin" ? 
+              <Link to={`/admin/dashboard`}>
+              <h1 className="text-[#fff] flex items-center">
+                Dashboard
+                <IoIosArrowForward className="ml-1" />
+              </h1>
+            </Link>
+            :
             <Link to={`${(role === "seller" && user) ? "/dashboard" : "/shop-create"}`}>
               <h1 className="text-[#fff] flex items-center">
                 {(role === "seller" && user) ? "Go Dashboard" : "Become Seller"}{" "}
                 <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
+            }
           </div>
         </div>
       </div>
@@ -222,7 +232,7 @@ const Header = ({ activeHeading }) => {
                 {user ? (
                   <Link to="/profile">
                     <img
-                      src={`${user?.photoURL}`}
+                      src={`${user?.avatar}`}
                       className="w-[40px] h-[40px] rounded-full"
                       alt=""
                     />
