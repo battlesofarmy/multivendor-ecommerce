@@ -65,6 +65,8 @@ import { observeAuthState } from "./redux/actions/authAction.js";
 import { fetchUserData } from "./redux/actions/user.js";
 import SearchPage from "./pages/SearchPage.jsx";
 import EventsDetails from "./pages/EventsDetails.jsx";
+import Payment from "./components/Payment/Payment.jsx";
+import ThankYou from "./pages/ThankYou.jsx";
 // import { addToCartThunk } from "./redux/actions/cartAction.js";
 
 
@@ -107,6 +109,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/sign-up" element={<SignupPage />} />
+        <Route path="/payment" element={<Payment />} />
         <Route
           path="/activation/:activation_token"
           element={<ActivationPage />}
@@ -169,6 +172,7 @@ const App = () => {
         {/* shop Routes */}
         <Route path="/shop-create" element={<ShopCreatePage />} />
         <Route path="/shop-login" element={<ShopLoginPage />} />
+        <Route path="/thank-you" element={<ThankYou />} />
         <Route
           path="/shop/:id"
           element={

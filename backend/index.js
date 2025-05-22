@@ -24,12 +24,14 @@ const userHandler = require('./routeHandlers/userHanlder');
 const cartHandler = require('./routeHandlers/cartHandler');
 const eventHandler = require('./routeHandlers/eventhanlder');
 const cuponHandler = require('./routeHandlers/cuponCodeHandler');
+const orderHandler = require('./routeHandlers/orderHandler');
 
 app.use('/products', productHandler);
 app.use('/user', userHandler); 
 app.use('/cart', cartHandler);
 app.use('/event', eventHandler);
 app.use('/cupon', cuponHandler);
+app.use('/order', orderHandler);
 
 const Product = require('./schemaModels/productSchemaModel');
 const Event = require('./schemaModels/evnetSchemaModel');
