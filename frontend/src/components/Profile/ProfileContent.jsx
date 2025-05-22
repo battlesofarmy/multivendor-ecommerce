@@ -16,8 +16,6 @@ import { Country, State } from "country-state-city";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { getAllOrdersOfUser } from "../../redux/actions/order";
-import { fetchUserData } from "../../redux/actions/user";
 import api from "../../utils/axiosCongif";
 
 const ProfileContent = ({ active }) => {
@@ -145,13 +143,6 @@ const ProfileContent = ({ active }) => {
         </div>
       )}
 
-      {/* Track order */}
-      {active === 5 && (
-        <div>
-          <TrackOrder />
-        </div>
-      )}
-
       {/* Change Password */}
       {active === 6 && (
         <div>
@@ -171,11 +162,12 @@ const ProfileContent = ({ active }) => {
 
 const AllOrders = () => {
   const { user } = useSelector((state) => state.auth);
-  const { orders } = useSelector((state) => state.order);
-  const dispatch = useDispatch();
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    dispatch(getAllOrdersOfUser(user?._id));
+    api.get(`/order/${user?.uid}`)
+    .then((res)=> setOrders(res.data))
+    .catch((err)=> console.log(err))
   }, []);
 
   const columns = [
@@ -231,7 +223,7 @@ const AllOrders = () => {
   const row = [];
 
   orders &&
-    orders.forEach((item) => {
+    orders?.forEach((item) => {
       row.push({
         id: item?._id,
         itemsQty: item?.cart.length,
@@ -255,15 +247,17 @@ const AllOrders = () => {
 
 const AllRefundOrders = () => {
   const { user } = useSelector((state) => state.user);
-  const { orders } = useSelector((state) => state.order);
-  const dispatch = useDispatch();
+    const [orders, setOrders] = useState([]);
 
   useEffect(() => {
-    dispatch(getAllOrdersOfUser(user?._id));
+    api.get(`/order/${user?.uid}`)
+    .then((res)=> setOrders(res.data))
+    .catch((err)=> console.log(err))
   }, []);
 
+
   const eligibleOrders =
-    orders && orders.filter((item) => item.status === "Processing refund");
+    orders && orders?.filter((item) => item.status === "Processing refund");
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -317,7 +311,7 @@ const AllRefundOrders = () => {
   const row = [];
 
   eligibleOrders &&
-    eligibleOrders.forEach((item) => {
+    eligibleOrders?.forEach((item) => {
       row.push({
         id: item?._id,
         itemsQty: item?.cart.length,
@@ -339,89 +333,7 @@ const AllRefundOrders = () => {
   );
 };
 
-const TrackOrder = () => {
-  const { user } = useSelector((state) => state.user);
-  const { orders } = useSelector((state) => state.order);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getAllOrdersOfUser(user?._id));
-  }, []);
-
-  const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
-
-    {
-      field: "status",
-      headerName: "Status",
-      minWidth: 130,
-      flex: 0.7,
-      cellClassName: (params) => {
-        return params.row.status === "Delivered" ? "greenColor" : "redColor";
-      },
-      
-    },
-    {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
-      minWidth: 130,
-      flex: 0.7,
-    },
-
-    {
-      field: "total",
-      headerName: "Total",
-      type: "number",
-      minWidth: 130,
-      flex: 0.8,
-    },
-
-    {
-      field: " ",
-      flex: 1,
-      minWidth: 150,
-      headerName: "",
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <>
-            <Link to={`/user/track/order/${params.id}`}>
-              <Button>
-                <MdTrackChanges size={20} />
-              </Button>
-            </Link>
-          </>
-        );
-      },
-    },
-  ];
-
-  const row = [];
-
-  orders &&
-    orders.forEach((item) => {
-      row.push({
-        id: item?._id,
-        itemsQty: item?.cart.length,
-        total: "US$ " + item?.totalPrice,
-        status: item?.status,
-      });
-    });
-
-  return (
-    <div className="pl-8 pt-1">
-      <DataGrid
-        rows={row}
-        columns={columns}
-        pageSize={10}
-        disableSelectionOnClick
-        autoHeight
-      />
-    </div>
-  );
-};
 
 
 const ChangePassword = () => {
@@ -540,7 +452,6 @@ const Address = () => {
 
   return (
     <div className="w-full px-5">
-      hello johfa
       {open && (
         <div className="fixed w-full h-screen bg-[#0000004b] top-0 left-0 flex items-center justify-center ">
           <div className="w-[35%] h-[80vh] bg-white rounded shadow relative overflow-y-scroll">

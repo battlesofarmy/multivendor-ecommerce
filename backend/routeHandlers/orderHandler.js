@@ -16,7 +16,7 @@ router.get('/', async(req, res)=>{
 router.get('/:id', async(req, res)=>{
     // console.log(req.params.id)
     try{
-        const result = await Order.findOne({_id: req.params.id});
+        const result = await Order.find({ "user.uid": req.params.id });
         res.status(200).send(result);
     }catch(err){
         res.status(500).send(err.message);

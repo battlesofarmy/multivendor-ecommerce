@@ -91,7 +91,7 @@ const ProfileSidebar = ({ setActive, active }) => {
           } 800px:block hidden`}
         >
           Address
-        </span>                onSubmit={()=> toast.success("Profile Updated Succesfully")}
+        </span>    
         
       </div>
 

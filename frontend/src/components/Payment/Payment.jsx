@@ -47,6 +47,7 @@ const PaymentPage = () => {
         .then(()=>{
           toast.success("Payment successful!");
           localStorage.removeItem("latestOrder");
+          localStorage.setItem("totalPrice", JSON.stringify(totalPrice));
           setTimeout(() => {
             nagivate('/thank-you')
           }, 1000);
